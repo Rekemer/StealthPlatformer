@@ -16,7 +16,8 @@ public class Move : MonoBehaviour
     [SerializeField] private float angle;
     [SerializeField] private float horizontalDamping;
     [SerializeField] private bool check;
-
+    [SerializeField] private float jumpHeight =4f;
+    [SerializeField] private float timeToJumpApex = .4f;
     private float
         timeToRemember = .2f; // time interval when jump button is pressed - to be able to jump before being grounded
 
@@ -35,6 +36,9 @@ public class Move : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        var gravity = -2f * jumpHeight / Mathf.Pow(timeToJumpApex, 2);
+        Physics2D.gravity = new Vector2(0, gravity);
+        jumpVelocity = Mathf.Abs(timeToJumpApex * Physics2D.gravity.y);
     }
 
 
