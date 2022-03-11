@@ -7,14 +7,15 @@ public class Timer : MonoBehaviour
 {
     public Text timeLeft;
     public Image clock;
-     int _maxTime = 60 ;
+    float _maxTime = 6f ;
     public bool isPaused;
     public float flashTimeLimit = 10f;
     public AudioClip beepSound;
     public Color flashColor = Color.red;
     public float flashInterval = 1f;
     private IEnumerator routine;
-    public void Init( int maxTime = 60)
+    
+    public void Init( float maxTime = 6f)
     {
         _maxTime = maxTime;
         if (timeLeft != null)
@@ -30,7 +31,7 @@ public class Timer : MonoBehaviour
         }
     }
 
-    public void UpdateTimer(int time)
+    public void UpdateTimer(float time)
     {
         if (isPaused) return;
         if (clock != null)
