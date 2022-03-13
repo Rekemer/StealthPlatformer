@@ -1,18 +1,35 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
+#endif
 using UnityEngine;
 
-namespace DefaultNamespace
-{
-    public class Detector : MonoBehaviour
+[RequireComponent(typeof(BoxCollider2D))]
+[ExecuteAlways]
+    public class Detector : MonoBehaviour, IHaveSize
     {
-#if UNITY_EDITOR
-        private void OnDrawGizmosSelected()
+        public Vector2 Size { get => size; }
+        [SerializeField]
+        private Vector2 size;
+        private BoxCollider2D collider;
+        private void Awake()
         {
-            //groundCheck.position = 
-            Handles.color = Color.red;
-            var radius = new Vector2(1.53f, 0.57f);
-            Handles.DrawWireCube(transform.position, radius);
+            collider = GetComponent<BoxCollider2D>();
         }
-#endif
+
+        private void OnEnable()
+        {
+            DetectorManager.objects.Add(this);
+        }
+
+        private void OnDisable()
+        {
+            DetectorManager.objects.Remove(this);
+        }
+        private void OnValidate() // when something in inspector changes this function is called
+        {
+            if (collider != null)
+            {
+                collider.size = size;
+            }
+        }
     }
-}

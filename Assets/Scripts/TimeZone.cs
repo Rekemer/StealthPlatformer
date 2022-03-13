@@ -1,11 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(BoxCollider2D))]
-public class TimeZone : MonoBehaviour
+public class TimeZone : MonoBehaviour, IHaveSize
 {
     [SerializeField]
     private Vector2 size;
@@ -23,11 +21,7 @@ public class TimeZone : MonoBehaviour
             return size;
         }
     }
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        
-    }
+    
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -47,14 +41,14 @@ public class TimeZone : MonoBehaviour
 
     private void OnEnable()
     {
-        TimeZoneManager.timeZones.Add(this);
+        TimeZoneManager.objects.Add(this);
     }
 
     private void OnDisable()
     {
-        TimeZoneManager.timeZones.Remove(this);
+        TimeZoneManager.objects.Remove(this);
     }
-    private void OnValidate()
+    private void OnValidate() // when something in inspector changes this function is called
     {
         if (collider != null)
         {
@@ -64,6 +58,6 @@ public class TimeZone : MonoBehaviour
 
     private void OnDestroy()
     {
-        TimeZoneManager.timeZones.Remove(this);
+        TimeZoneManager.objects.Remove(this);
     }
 }

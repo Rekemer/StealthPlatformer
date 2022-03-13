@@ -11,9 +11,9 @@ public class Move : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float jumpVelocity;
-    [SerializeField] private Transform groundCheck;
-    [SerializeField] private Transform leftWallCheck;
-    [SerializeField] private Transform rightWallCheck;
+    [SerializeField] private Detector groundCheck;
+    [SerializeField] private Detector leftWallCheck;
+    [SerializeField] private Detector rightWallCheck;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private Vector2 radius;
     [SerializeField] private float angle;
@@ -53,7 +53,7 @@ public class Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isGrounded = Physics2D.OverlapBox(groundCheck.position, radius, angle, layerMask);
+        isGrounded = Physics2D.OverlapBox(groundCheck.transform.position, groundCheck.Size, angle, layerMask);
         horizontal = Input.GetAxis("Horizontal");
         spaceBar = Input.GetButtonDown("Jump");
         xVelocity = horizontal * speed;
@@ -95,7 +95,9 @@ public class Move : MonoBehaviour
     {
         //groundCheck.position = 
         Handles.color = Color.red;
-        Handles.DrawWireCube(groundCheck.position, radius);
+        Handles.DrawWireCube(groundCheck.transform.position, groundCheck.Size);
+        Handles.DrawWireCube(leftWallCheck.transform.position, leftWallCheck.Size);
+        Handles.DrawWireCube(rightWallCheck.transform.position, rightWallCheck.Size);
     }
 #endif
 }

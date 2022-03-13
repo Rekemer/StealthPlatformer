@@ -7,10 +7,13 @@
     <list default="true" id="81af1969-c8b3-4d33-b07b-82e3d60b809c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SpeedPlatformer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SpeedPlatformer/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SandBox.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SandBox.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BetterJump.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CharacterController/BetterJump.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/BetterJump.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CharacterController/BetterJump.cs.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Move.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Move.cs.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CharacterController/BetterJump.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BetterJump.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CharacterController/BetterJump.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/BetterJump.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CharacterController/Move.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Move.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CharacterController/Move.cs.meta" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Move.cs.meta" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Detector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Detector.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TimeZone.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TimeZone.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TimeZoneManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TimeZoneManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +30,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Timer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/adfa4b62400849189388df71c9e26e89144200/ed/462463fc/Vector2.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/CharacterController/BetterJump.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/BetterJump.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/adfa4b62400849189388df71c9e26e89144200/18/6ee12af0/Bounds.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TimeBonus.cs" root0="FORCE_HIGHLIGHTING" />
@@ -94,7 +97,7 @@
       <workItem from="1646903949748" duration="4285000" />
       <workItem from="1646990122852" duration="919000" />
       <workItem from="1647054462920" duration="788000" />
-      <workItem from="1647164823842" duration="4840000" />
+      <workItem from="1647164823842" duration="7523000" />
     </task>
     <servers />
   </component>
@@ -111,22 +114,10 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/GameManager.cs</url>
-          <line>38</line>
-          <properties documentPath="C:\dev\Unity Projects\SpeedPlatformer\Assets\Scripts\GameManager.cs" initialLine="35" containingFunctionPresentation="method 'AddTime'" />
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Assets/Scripts/TimeBonus.cs</url>
           <line>21</line>
           <properties documentPath="C:\dev\Unity Projects\SpeedPlatformer\Assets\Scripts\TimeBonus.cs" initialLine="21" containingFunctionPresentation="method 'OnCollisionEnter2D'" />
           <option name="timeStamp" value="2" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Assets/Scripts/TimeZone.cs</url>
-          <line>41</line>
-          <properties documentPath="C:\dev\Unity Projects\SpeedPlatformer\Assets\Scripts\TimeZone.cs" initialLine="41" containingFunctionPresentation="method 'OnTriggerExit2D'" />
-          <option name="timeStamp" value="3" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
