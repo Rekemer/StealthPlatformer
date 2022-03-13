@@ -12,7 +12,8 @@ using UnityEngine;
         {
             foreach (var obj in objects)
             {
-                Handles.DrawWireCube(obj.transform.position, obj.Size);
+                Handles.matrix = obj.transform.localToWorldMatrix;
+                Handles.DrawWireCube(Vector3.zero, obj.Size);
             }
         }
 #endif

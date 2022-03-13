@@ -31,7 +31,7 @@ public class Move : MonoBehaviour
     private bool spaceBarBefore;
     private bool spaceBar;
     private float horizontal;
-    
+    public bool isTouchingWall;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -54,6 +54,18 @@ public class Move : MonoBehaviour
     void Update()
     {
         isGrounded = Physics2D.OverlapBox(groundCheck.transform.position, groundCheck.Size, angle, layerMask);
+        bool isTouchingRight = Physics2D.OverlapBox(rightWallCheck.transform.position, rightWallCheck.Size,0f, layerMask);
+        bool isTouchingLeft = Physics2D.OverlapBox(leftWallCheck.transform.position, leftWallCheck.Size, 0f,layerMask);
+        if (isTouchingRight)
+        {
+            Debug.Log("touching right" + isTouchingRight);
+        }
+        
+        if (isTouchingLeft)
+        {
+            Debug.Log("touching left" + isTouchingLeft);
+        }
+        
         horizontal = Input.GetAxis("Horizontal");
         spaceBar = Input.GetButtonDown("Jump");
         xVelocity = horizontal * speed;

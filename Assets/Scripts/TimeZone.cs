@@ -2,7 +2,6 @@
 using UnityEngine;
 
 [ExecuteInEditMode]
-[RequireComponent(typeof(BoxCollider2D))]
 public class TimeZone : MonoBehaviour, IHaveSize
 {
     [SerializeField]
@@ -41,12 +40,20 @@ public class TimeZone : MonoBehaviour, IHaveSize
 
     private void OnEnable()
     {
-        TimeZoneManager.objects.Add(this);
+        if (!TimeZoneManager.objects.Contains(this))
+        {
+            TimeZoneManager.objects.Add(this);
+        }
     }
 
     private void OnDisable()
     {
-        TimeZoneManager.objects.Remove(this);
+        if (TimeZoneManager.objects.Contains(this))
+        {
+            TimeZoneManager.objects.Remove(this);
+        }
+        
+       
     }
     private void OnValidate() // when something in inspector changes this function is called
     {

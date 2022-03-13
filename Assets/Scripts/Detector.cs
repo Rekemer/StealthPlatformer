@@ -3,7 +3,6 @@ using UnityEditor;
 #endif
 using UnityEngine;
 
-[RequireComponent(typeof(BoxCollider2D))]
 [ExecuteAlways]
     public class Detector : MonoBehaviour, IHaveSize
     {
@@ -18,12 +17,18 @@ using UnityEngine;
 
         private void OnEnable()
         {
-            DetectorManager.objects.Add(this);
+            if (!DetectorManager.objects.Contains(this))
+            {
+                DetectorManager.objects.Add(this);
+            }
         }
 
         private void OnDisable()
         {
-            DetectorManager.objects.Remove(this);
+            if (DetectorManager.objects.Contains(this))
+            {
+                DetectorManager.objects.Remove(this);
+            }
         }
         private void OnValidate() // when something in inspector changes this function is called
         {
