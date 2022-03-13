@@ -6,28 +6,32 @@ using UnityEditor;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(BetterJump))]
 public class Move : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float jumpVelocity;
     [SerializeField] private Transform groundCheck;
+    [SerializeField] private Transform leftWallCheck;
+    [SerializeField] private Transform rightWallCheck;
     [SerializeField] private LayerMask layerMask;
     [SerializeField] private Vector2 radius;
     [SerializeField] private float angle;
     [SerializeField] private float horizontalDamping;
     [SerializeField] private bool check;
-    [SerializeField] private float jumpHeight =4f;
+    [SerializeField] private float jumpHeight = 4f;
     [SerializeField] private float timeToJumpApex = .4f;
-    private float
-        timeToRemember = .2f; // time interval when jump button is pressed - to be able to jump before being grounded
+
+    private float timeToRemember = .2f; // time interval when jump button is pressed - to be able to jump before being grounded
 
     private Rigidbody2D rb;
-    private float time;
+    private float time =0f;
     private bool isGrounded;
     private float xVelocity;
+    private bool spaceBarBefore;
     private bool spaceBar;
     private float horizontal;
-
+    
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -37,8 +41,12 @@ public class Move : MonoBehaviour
     void Start()
     {
         var gravity = -2f * jumpHeight / Mathf.Pow(timeToJumpApex, 2);
-        Physics2D.gravity = new Vector2(0, gravity);
-        jumpVelocity = Mathf.Abs(timeToJumpApex * Physics2D.gravity.y);
+        var scale = gravity / Physics2D.gravity.y;
+        rb.gravityScale = scale;
+        jumpVelocity = Mathf.Abs(timeToJumpApex * Physics2D.gravity.y * rb.gravityScale);
+        Debug.Log("calculated gravity" + gravity);
+        Debug.Log("real gravity" +  Physics2D.gravity.y * rb.gravityScale);
+        Debug.Log("jumpVelocity" + jumpVelocity);
     }
 
 
@@ -63,21 +71,22 @@ public class Move : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (spaceBar)
+        if (time > 0)
         {
-            Debug.Log("true");
+            if (isGrounded)
+            {
+                time = 0;
+                rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
+                spaceBarBefore = true;
+            }
+            else if (spaceBarBefore)
+            {
+                time = 0;
+                rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
+                spaceBarBefore = false;
+            }
+          
         }
-        else
-        {
-            Debug.Log("false");
-        }
-
-        if (time > 0 && isGrounded)
-        {
-            time = 0;
-            rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
-        }
-
         rb.velocity = new Vector2(xVelocity, rb.velocity.y);
     }
 
