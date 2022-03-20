@@ -7,10 +7,7 @@
     <list default="true" id="81af1969-c8b3-4d33-b07b-82e3d60b809c" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.SpeedPlatformer/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.SpeedPlatformer/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/SandBox.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/SandBox.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Detector.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Detector.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Move.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Move.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/ObjectManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/ObjectManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/TimeZone.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/TimeZone.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +20,7 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/TimeZoneManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/2a255f4f234d4e00850afff85a122b331b800/7a/8abc7fac/Collider2D.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/adfa4b62400849189388df71c9e26e89144200/4b/eaa6b1d1/SetupCoroutine.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Singletone.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Timer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/adfa4b62400849189388df71c9e26e89144200/ed/462463fc/Vector2.cs" root0="SKIP_HIGHLIGHTING" />
@@ -64,10 +62,10 @@
       </option>
       <method v="2" />
     </configuration>
-    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" ignored-value-for-modified-check="6860">
       <option name="allowRunningInParallel" value="false" />
       <option name="listenPortForConnections" value="false" />
-      <option name="pid" />
+      <option name="pid" value="6860" />
       <option name="projectPathOnTarget" />
       <option name="selectedOptions">
         <list />
@@ -93,7 +91,8 @@
       <workItem from="1646990122852" duration="919000" />
       <workItem from="1647054462920" duration="788000" />
       <workItem from="1647164823842" duration="7837000" />
-      <workItem from="1647180087561" duration="1446000" />
+      <workItem from="1647180087561" duration="2160000" />
+      <workItem from="1647785517485" duration="2465000" />
     </task>
     <servers />
   </component>

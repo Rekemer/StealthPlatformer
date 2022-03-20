@@ -21,6 +21,9 @@ public class Move : MonoBehaviour
     [SerializeField] private bool check;
     [SerializeField] private float jumpHeight = 4f;
     [SerializeField] private float timeToJumpApex = .4f;
+    [SerializeField] private float wallSlidingSpeed = .4f;
+    [SerializeField] private float xWallJump = 3f;
+    [SerializeField] private float yWallJump = 3f;
 
     private float timeToRemember = .2f; // time interval when jump button is pressed - to be able to jump before being grounded
 
@@ -31,7 +34,9 @@ public class Move : MonoBehaviour
     private bool spaceBarBefore;
     private bool spaceBar;
     private float horizontal;
-    public bool isTouchingWall;
+    private bool isWallSliding;
+    private bool isWallJumping;
+    
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -44,18 +49,29 @@ public class Move : MonoBehaviour
         var scale = gravity / Physics2D.gravity.y;
         rb.gravityScale = scale;
         jumpVelocity = Mathf.Abs(timeToJumpApex * Physics2D.gravity.y * rb.gravityScale);
-        Debug.Log("calculated gravity" + gravity);
-        Debug.Log("real gravity" +  Physics2D.gravity.y * rb.gravityScale);
-        Debug.Log("jumpVelocity" + jumpVelocity);
+        // Debug.Log("calculated gravity" + gravity);
+        // Debug.Log("real gravity" +  Physics2D.gravity.y * rb.gravityScale);
+        // Debug.Log("jumpVelocity" + jumpVelocity);
     }
 
 
     // Update is called once per frame
     void Update()
     {
+        horizontal = Input.GetAxis("Horizontal");
+        spaceBar = Input.GetButtonDown("Jump");
+        
         isGrounded = Physics2D.OverlapBox(groundCheck.transform.position, groundCheck.Size, angle, layerMask);
         bool isTouchingRight = Physics2D.OverlapBox(rightWallCheck.transform.position, rightWallCheck.Size,0f, layerMask);
         bool isTouchingLeft = Physics2D.OverlapBox(leftWallCheck.transform.position, leftWallCheck.Size, 0f,layerMask);
+        isWallSliding = (isTouchingLeft || isTouchingRight ) && !isGrounded && horizontal!=0;
+        if (isWallSliding && spaceBar)
+        {
+            isWallJumping = true;
+            Invoke("ResetWallJump",0.2f ); 
+        }
+        
+        Debug.Log("isWallJumping " + isWallJumping);
         if (isTouchingRight)
         {
             Debug.Log("touching right" + isTouchingRight);
@@ -66,8 +82,7 @@ public class Move : MonoBehaviour
             Debug.Log("touching left" + isTouchingLeft);
         }
         
-        horizontal = Input.GetAxis("Horizontal");
-        spaceBar = Input.GetButtonDown("Jump");
+       
         xVelocity = horizontal * speed;
         if (check)
         {
@@ -97,9 +112,31 @@ public class Move : MonoBehaviour
                 rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
                 spaceBarBefore = false;
             }
-          
         }
+
+        if (isWallSliding)
+        {
+            if (isWallJumping)
+            {
+                var newVelocity = new Vector2(xWallJump * -horizontal, yWallJump);
+                rb.velocity = newVelocity;
+               
+            }
+            else
+            {
+                var newYVel = Mathf.Clamp(rb.velocity.y, -wallSlidingSpeed, float.MaxValue);
+                rb.velocity = new Vector2(rb.velocity.x, newYVel) ;
+            }
+            
+        }
+        if (!isWallJumping)
         rb.velocity = new Vector2(xVelocity, rb.velocity.y);
+    }
+
+    private void ResetWallJump()
+    {
+        isWallJumping = false;
+      
     }
 
 #if UNITY_EDITOR
