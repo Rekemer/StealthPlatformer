@@ -55,6 +55,7 @@ public class Move : MonoBehaviour
   
     void Update()
     {
+        Debug.Log("can second jump " + CanSecondJump);
         horizontal = Input.GetAxis("Horizontal");
         spaceBar = Input.GetButtonDown("Jump");
         CheckGround();
@@ -64,6 +65,7 @@ public class Move : MonoBehaviour
         }
         else
         {
+            if (isGrounded)
             CanSecondJump = true;
         }
 

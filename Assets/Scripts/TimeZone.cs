@@ -1,4 +1,6 @@
 
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -20,7 +22,11 @@ public class TimeZone : MonoBehaviour, IHaveSize
             return size;
         }
     }
-    
+
+    private void Start()
+    {
+        collider.size = size;
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
