@@ -22,6 +22,9 @@ public class RopeSystem : MonoBehaviour
     private List<Vector2> ropePositions = new List<Vector2>();
     private bool distanceSet;
     private Dictionary<Vector2, int> wrapPointsLookup = new Dictionary<Vector2, int>();
+
+    private bool isColliding;
+    public float climbSpeed = 2f ;
     void Awake()
     {
         // 2
@@ -38,6 +41,7 @@ public class RopeSystem : MonoBehaviour
             Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0f));
         var facingDirection = worldMousePosition - transform.position;
         var aimAngle = Mathf.Atan2(facingDirection.y, facingDirection.x);
+        
         if (aimAngle < 0f)
         {
             aimAngle = Mathf.PI * 2 + aimAngle;
@@ -89,6 +93,7 @@ public class RopeSystem : MonoBehaviour
         }
         HandleInput(aimDirection);
         UpdateRopePositions();
+        HandleRopeLength();
     }
     
     private void SetCrosshairPosition(float aimAngle)
@@ -120,6 +125,7 @@ public class RopeSystem : MonoBehaviour
             {
                 Debug.Log(hit.transform.gameObject.name);
                 ropeAttached = true;
+                playerMovement.isSwinging = true;
                 if (!ropePositions.Contains(hit.point))
                 {
                     // 4
@@ -151,7 +157,7 @@ public class RopeSystem : MonoBehaviour
     {
         ropeJoint.enabled = false;
         ropeAttached = false;
-        //playerMovement.isSwinging = false;
+        playerMovement.isSwinging = false;
         ropeRenderer.positionCount = 2;
         ropeRenderer.SetPosition(0, transform.position);
         ropeRenderer.SetPosition(1, transform.position);
@@ -182,24 +188,24 @@ public class RopeSystem : MonoBehaviour
                 if (i == ropePositions.Count - 1 || ropePositions.Count == 1)
                 {
                     var ropePosition = ropePositions[ropePositions.Count - 1];
-                    if (ropePositions.Count == 1)
-                    {
+                    // if (ropePositions.Count == 1)
+                    // {
+                    //     ropeHingeAnchorRb.transform.position = ropePosition;
+                    //     if (!distanceSet)
+                    //     {
+                    //         ropeJoint.distance = Vector2.Distance(transform.position, ropePosition);
+                    //         distanceSet = true;
+                    //     }
+                    // }
+                    // else
+                    // {
                         ropeHingeAnchorRb.transform.position = ropePosition;
                         if (!distanceSet)
                         {
                             ropeJoint.distance = Vector2.Distance(transform.position, ropePosition);
                             distanceSet = true;
                         }
-                    }
-                    else
-                    {
-                        ropeHingeAnchorRb.transform.position = ropePosition;
-                        if (!distanceSet)
-                        {
-                            ropeJoint.distance = Vector2.Distance(transform.position, ropePosition);
-                            distanceSet = true;
-                        }
-                    }
+                    //}
                 }
                 // 5
                 else if (i - 1 == ropePositions.IndexOf(ropePositions.Last()))
@@ -232,5 +238,26 @@ public class RopeSystem : MonoBehaviour
         return orderedDictionary.Any() ? orderedDictionary.First().Value : Vector2.zero;
     }
     
+    private void HandleRopeLength()
+    {
+        // 1
+        if (Input.GetAxis("Vertical") >= 1f && ropeAttached && !isColliding)
+        {
+            ropeJoint.distance -= Time.deltaTime * climbSpeed;
+        }
+        else if (Input.GetAxis("Vertical") < 0f && ropeAttached)
+        {
+            ropeJoint.distance += Time.deltaTime * climbSpeed;
+        }
+    }
     
+    void OnTriggerStay2D(Collider2D colliderStay)
+    {
+        isColliding = true;
+    }
+
+    private void OnTriggerExit2D(Collider2D colliderOnExit)
+    {
+        isColliding = false;
+    }
 }

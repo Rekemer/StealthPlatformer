@@ -10,6 +10,7 @@ using UnityEngine;
 public class Move : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private float swingForce;
     [SerializeField] private float jumpVelocity;
     [SerializeField] private Detector groundCheck;
     [SerializeField] private Detector leftWallCheck;
@@ -20,10 +21,9 @@ public class Move : MonoBehaviour
     [SerializeField] private float jumpHeight = 4f;
     [SerializeField] private float timeToJumpApex = .4f;
     [SerializeField] private float wallSlidingSpeed = .4f;
+    [SerializeField] private Transform ropeHook;
 
-
-    private float
-        timeToRemember = .2f; // time interval when jump button is pressed - to be able to jump before being grounded
+    private float timeToRemember = .2f; // time interval when jump button is pressed - to be able to jump before being grounded
 
     private Rigidbody2D rb;
     private float time = 0f;
@@ -36,7 +36,7 @@ public class Move : MonoBehaviour
     private bool isWallJumping;
     private bool isTouchingRight;
     private bool isTouchingLeft;
-
+    public bool isSwinging;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -55,7 +55,6 @@ public class Move : MonoBehaviour
   
     void Update()
     {
-        Debug.Log("can second jump " + CanSecondJump);
         horizontal = Input.GetAxis("Horizontal");
         spaceBar = Input.GetButtonDown("Jump");
         CheckGround();
@@ -147,7 +146,64 @@ public class Move : MonoBehaviour
         time = 0;
         rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
     }
-    
+
+    private void Swinging()
+    {
+        if (horizontal < 0f || horizontal > 0f)
+    {
+        
+        if (isSwinging)
+        {
+            
+
+            // 1 - Get a normalized direction vector from the player to the hook point
+            var playerToHookDirection = ((Vector2)ropeHook.position - (Vector2)transform.position).normalized;
+
+            // 2 - Inverse the direction to get a perpendicular direction
+            Vector2 perpendicularDirection;
+            if (horizontal < 0)
+            {
+                perpendicularDirection = new Vector2(-playerToHookDirection.y, playerToHookDirection.x);
+                var leftPerpPos = (Vector2)transform.position - perpendicularDirection * -2f;
+                Debug.DrawLine(transform.position, leftPerpPos, Color.green, 0f);
+            }
+            else
+            {
+                perpendicularDirection = new Vector2(playerToHookDirection.y, -playerToHookDirection.x);
+                var rightPerpPos = (Vector2)transform.position + perpendicularDirection * 2f;
+                Debug.DrawLine(transform.position, rightPerpPos, Color.green, 0f);
+            }
+
+            var force = perpendicularDirection * swingForce;
+            rb.AddForce(force, ForceMode2D.Force);
+        }
+        else
+        {
+            
+            if (groundCheck)
+            {
+                var groundForce = speed * 2f;
+                rb.AddForce(new Vector2((horizontal * groundForce -  rb.velocity.x) * groundForce, 0));
+                rb.velocity = new Vector2( rb.velocity.x,  rb.velocity.y);
+            }
+        }
+    }
+    else
+    {
+       
+    }
+
+    if (!isSwinging)
+    {
+        if (!groundCheck) return;
+
+        bool isJumping = time > 0f;
+        if (isJumping)
+        {
+            rb.velocity = new Vector2( rb.velocity.x, jumpVelocity);
+        }
+    }
+    }
 
 #if UNITY_EDITOR
     private void OnDrawGizmosSelected()
