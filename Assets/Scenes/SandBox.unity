@@ -200,9 +200,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zones:
-  - {fileID: 2126629338}
-  - {fileID: 1558805247}
   - {fileID: 813365651}
+  - {fileID: 1558805247}
+  - {fileID: 2126629338}
 --- !u!1 &46519820
 GameObject:
   m_ObjectHideFlags: 0
@@ -2601,7 +2601,7 @@ Transform:
   m_GameObject: {fileID: 1641748877}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 1688963127}
   m_RootOrder: 2
@@ -2672,9 +2672,8 @@ GameObject:
   - component: {fileID: 1688963132}
   - component: {fileID: 1688963131}
   - component: {fileID: 1688963128}
-  - component: {fileID: 1688963129}
-  - component: {fileID: 1688963133}
   - component: {fileID: 1688963134}
+  - component: {fileID: 1688963129}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -2765,25 +2764,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fallMultiplier: 2.5
   lowJumpMultiplier: 2.5
---- !u!232 &1688963129
-DistanceJoint2D:
+--- !u!114 &1688963129
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1688963125}
   m_Enabled: 1
-  serializedVersion: 4
-  m_EnableCollision: 0
-  m_ConnectedRigidBody: {fileID: 858365705}
-  m_BreakForce: Infinity
-  m_BreakTorque: Infinity
-  m_AutoConfigureConnectedAnchor: 0
-  m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: 0}
-  m_AutoConfigureDistance: 0
-  m_Distance: 0.005
-  m_MaxDistanceOnly: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae3b97e9888fd3f46b5592a0d421f038, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interType: 0
+  speed: 5
+  ropeMaxCastDistance: 20
+  ropeHingeAnchorSprite: {fileID: 858365706}
+  crosshairSprite: {fileID: 1641748879}
+  crosshair: {fileID: 1641748878}
+  ropeRenderer: {fileID: 1688963134}
+  ropeLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!61 &1688963130
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2859,28 +2861,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &1688963133
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1688963125}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5353d030ee30e7c468f21223645b057b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ropeHingeAnchor: {fileID: 858365703}
-  ropeJoint: {fileID: 1688963129}
-  crosshair: {fileID: 1641748878}
-  crosshairSprite: {fileID: 1641748879}
-  playerMovement: {fileID: 1688963131}
-  ropeRenderer: {fileID: 1688963134}
-  ropeLayerMask:
-    serializedVersion: 2
-    m_Bits: 64
-  climbSpeed: 2
 --- !u!120 &1688963134
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -3212,7 +3192,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7775176, y: 1}
+    m_SensorSize: {x: 1.7780613, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0

@@ -113,7 +113,7 @@ public class Move : MonoBehaviour
             if (isTouchingRight && xVelocity < 0 || isTouchingLeft && xVelocity > 0)
             {
                 rb.velocity = new Vector2(xVelocity, jumpVelocity);
-                CanSecondJump = true;
+               
             }
         }
     }
