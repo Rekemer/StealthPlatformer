@@ -92,6 +92,7 @@ public class Move : MonoBehaviour
         isTouchingRight = Physics2D.OverlapBox(rightWallCheck.transform.position, rightWallCheck.Size, 0f, layerMask);
         isTouchingLeft = Physics2D.OverlapBox(leftWallCheck.transform.position, leftWallCheck.Size, 0f, layerMask);
         isWallSliding = (isTouchingLeft || isTouchingRight) && !isGrounded && horizontal != 0;
+      
     }
 
     private void FixedUpdate()
