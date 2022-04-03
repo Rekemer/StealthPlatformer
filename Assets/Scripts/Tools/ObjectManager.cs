@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine;
 
 
+// exists so we can manage objects, to make them more visible in scene
     public class ObjectManager<T, U>  :MonoBehaviour where T: MonoBehaviour where U: MonoBehaviour,IHaveSize
     {
         public static List<U> objects { get; set; } = new List<U>();

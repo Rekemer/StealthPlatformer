@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class GrapplingHook : MonoBehaviour
 {
+    // in what way we getting closer to hook 
     [SerializeField] private LerpClass.InterType interType;
     [SerializeField] private float speed;
     [SerializeField] private float ropeMaxCastDistance;
@@ -109,16 +110,6 @@ public class GrapplingHook : MonoBehaviour
 
     private void Hook()
     {
-        // var displacement = ((Vector2)hitPos - (Vector2)transform.position).magnitude;
-        // var direction =((Vector3)hitPos - transform.position).normalized;
-        // var finalSpeedx = 2f * displacement / 2f - GetComponent<Rigidbody2D>().velocity.x;
-        // var finalSpeedy = 2f * displacement / 2f - GetComponent<Rigidbody2D>().velocity.y;
-        // var newVel = new Vector2(finalSpeedx, finalSpeedy);
-        // Debug.Log("new vel "+newVel);
-        // Debug.Log("displace "+displacement);
-        // Debug.Log("curr vel "+GetComponent<Rigidbody2D>().velocity);
-        // //GetComponent<Rigidbody2D>().AddForce(newVel,ForceMode2D.Impulse);
-        // GetComponent<Rigidbody2D>().velocity = newVel;
         StartCoroutine(HookRoutine());
     }
 
@@ -133,7 +124,6 @@ public class GrapplingHook : MonoBehaviour
             float acceleration = LerpClass.Lerp(t, interType);
             var direction =((Vector3)hitPos - transform.position).normalized;
             var vel = acceleration * (Vector2)direction + GetComponent<Rigidbody2D>().velocity;
-            Debug.Log(vel);
             GetComponent<Rigidbody2D>().velocity= vel;
             t += Time.deltaTime;
             yield return null;

@@ -15,6 +15,7 @@ using UnityEngine;
             collider = GetComponent<BoxCollider2D>();
         }
 
+        
         private void OnEnable()
         {
             if (!DetectorManager.objects.Contains(this))
@@ -22,7 +23,7 @@ using UnityEngine;
                 DetectorManager.objects.Add(this);
             }
         }
-
+        
         private void OnDisable()
         {
             if (DetectorManager.objects.Contains(this))
@@ -30,7 +31,7 @@ using UnityEngine;
                 DetectorManager.objects.Remove(this);
             }
         }
-        private void OnValidate() // when something in inspector changes this function is called
+        private void OnValidate() // when something in inspector changes this function is called - change size of collider from script inspector field
         {
             if (collider != null)
             {

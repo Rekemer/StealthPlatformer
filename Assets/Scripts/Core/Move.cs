@@ -10,18 +10,17 @@ using UnityEngine;
 public class Move : MonoBehaviour
 {
     [SerializeField] private float speed;
-    [SerializeField] private float swingForce;
     [SerializeField] private float jumpVelocity;
     [SerializeField] private Detector groundCheck;
     [SerializeField] private Detector leftWallCheck;
     [SerializeField] private Detector rightWallCheck;
+    
+    
     [SerializeField] private LayerMask layerMask;
-    [SerializeField] private float angle;
     [SerializeField] private float horizontalDamping;
     [SerializeField] private float jumpHeight = 4f;
     [SerializeField] private float timeToJumpApex = .4f;
     [SerializeField] private float wallSlidingSpeed = .4f;
-    [SerializeField] private Transform ropeHook;
 
     private float timeToRemember = .2f; // time interval when jump button is pressed - to be able to jump before being grounded
 
@@ -36,7 +35,6 @@ public class Move : MonoBehaviour
     private bool isWallJumping;
     private bool isTouchingRight;
     private bool isTouchingLeft;
-    public bool isSwinging;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -50,8 +48,7 @@ public class Move : MonoBehaviour
         rb.gravityScale = scale;
         jumpVelocity = Mathf.Abs(timeToJumpApex * Physics2D.gravity.y * rb.gravityScale);
     }
-
-
+    
   
     void Update()
     {
@@ -67,7 +64,7 @@ public class Move : MonoBehaviour
             if (isGrounded)
             CanSecondJump = true;
         }
-
+        // basic xVelocity 
         xVelocity = horizontal * speed;
         if (isGrounded)
         {
@@ -75,6 +72,7 @@ public class Move : MonoBehaviour
         }
 
         time -= Time.deltaTime;
+        // remembering time instead of just checking groung, so we can jump a bit earlier 
         if (spaceBar)
         {
             time = timeToRemember;
@@ -87,7 +85,7 @@ public class Move : MonoBehaviour
 
     private void CheckGround()
     {
-        isGrounded = Physics2D.OverlapBox(groundCheck.transform.position, groundCheck.Size, angle, layerMask);
+        isGrounded = Physics2D.OverlapBox(groundCheck.transform.position, groundCheck.Size, 0f, layerMask);
         isTouchingRight = Physics2D.OverlapBox(rightWallCheck.transform.position, rightWallCheck.Size, 0f, layerMask);
         isTouchingLeft = Physics2D.OverlapBox(leftWallCheck.transform.position, leftWallCheck.Size, 0f, layerMask);
         isWallSliding = (isTouchingLeft || isTouchingRight) && !isGrounded && horizontal != 0;
@@ -143,69 +141,15 @@ public class Move : MonoBehaviour
 
     private void Jump()
     {
+        // resetting time
         time = 0;
         rb.velocity = new Vector2(rb.velocity.x, jumpVelocity);
     }
 
-    private void Swinging()
-    {
-        if (horizontal < 0f || horizontal > 0f)
-    {
-        
-        if (isSwinging)
-        {
-            
-
-            // 1 - Get a normalized direction vector from the player to the hook point
-            var playerToHookDirection = ((Vector2)ropeHook.position - (Vector2)transform.position).normalized;
-
-            // 2 - Inverse the direction to get a perpendicular direction
-            Vector2 perpendicularDirection;
-            if (horizontal < 0)
-            {
-                perpendicularDirection = new Vector2(-playerToHookDirection.y, playerToHookDirection.x);
-                var leftPerpPos = (Vector2)transform.position - perpendicularDirection * -2f;
-                Debug.DrawLine(transform.position, leftPerpPos, Color.green, 0f);
-            }
-            else
-            {
-                perpendicularDirection = new Vector2(playerToHookDirection.y, -playerToHookDirection.x);
-                var rightPerpPos = (Vector2)transform.position + perpendicularDirection * 2f;
-                Debug.DrawLine(transform.position, rightPerpPos, Color.green, 0f);
-            }
-
-            var force = perpendicularDirection * swingForce;
-            rb.AddForce(force, ForceMode2D.Force);
-        }
-        else
-        {
-            
-            if (groundCheck)
-            {
-                var groundForce = speed * 2f;
-                rb.AddForce(new Vector2((horizontal * groundForce -  rb.velocity.x) * groundForce, 0));
-                rb.velocity = new Vector2( rb.velocity.x,  rb.velocity.y);
-            }
-        }
-    }
-    else
-    {
-       
-    }
-
-    if (!isSwinging)
-    {
-        if (!groundCheck) return;
-
-        bool isJumping = time > 0f;
-        if (isJumping)
-        {
-            rb.velocity = new Vector2( rb.velocity.x, jumpVelocity);
-        }
-    }
-    }
-
+    
+    
 #if UNITY_EDITOR
+    // method drawing our ground checkers in scene
     private void OnDrawGizmosSelected()
     {
         Handles.color = Color.red;

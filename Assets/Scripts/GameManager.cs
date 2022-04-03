@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : Singletone<GameManager>
 {
     [SerializeField] private Timer timer;
     [SerializeField] private float maxTime;
+    public bool IsGameWon { get; set; }
+    public bool IsGameOver { get; set; }
     private float timeLeft;
 
     void Start()
@@ -15,9 +19,25 @@ public class GameManager : Singletone<GameManager>
         StartCountDown();
     }
 
+    void Update()
+    {
+        if (IsGameWon)
+        {
+            UIManager.Instance.ShowWinScreen();
+        }
+        else
+        {
+            if (IsGameOver)
+            {
+                UIManager.Instance.ShowLoseScreen();
+            }
+            
+        }
+    }
     private void StartCountDown()
     {
         StartCoroutine(CountDownRoutine());
+        
     }
 
     IEnumerator CountDownRoutine()
@@ -32,6 +52,8 @@ public class GameManager : Singletone<GameManager>
 
             yield return null;
         }
+
+        IsGameOver = true;
     }
 
     public void AddTime(float time)
@@ -48,5 +70,41 @@ public class GameManager : Singletone<GameManager>
     public void Continue()
     {
         timer.isPaused = false;
+    }
+
+    public void ReloadScene()
+    {
+        var indexOfScene = SceneManager.GetActiveScene().buildIndex;
+        LoadLevel(indexOfScene);
+    }
+    public void LoadLevel(string levelName)
+    {
+        if (Application.CanStreamedLevelBeLoaded(levelName))
+        {
+            SceneManager.LoadScene(levelName);
+        }
+    }
+
+    public void LoadLevel(int levelIndex)
+    {
+        if (Application.CanStreamedLevelBeLoaded(levelIndex))
+        {
+            if (levelIndex >= 0 && SceneManager.sceneCountInBuildSettings > levelIndex)
+            {
+                SceneManager.LoadScene(levelIndex);
+            }
+            else
+            {
+                Debug.LogWarning("invalid scene index");
+            }
+        }
+        
+    }
+    public void LoadNextLevel()
+    {
+        var currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        var nextSceneIndex = ++currentSceneIndex;
+        var totalSceneCount = SceneManager.sceneCountInBuildSettings;
+        LoadLevel(nextSceneIndex % totalSceneCount);
     }
 }
