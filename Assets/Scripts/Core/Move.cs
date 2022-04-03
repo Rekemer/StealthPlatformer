@@ -41,6 +41,9 @@ public class Move : MonoBehaviour
     }
 
 
+    
+    // using physics equation to calculate parabola trajectory jumping
+    //https://www.youtube.com/watch?v=hG9SzQxaCm8&t=517s&ab_channel=GDC
     void Start()
     {
         var gravity = -2f * jumpHeight / Mathf.Pow(timeToJumpApex, 2);
