@@ -300,8 +300,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zones:
   - {fileID: 2126629338}
-  - {fileID: 813365651}
   - {fileID: 1558805247}
+  - {fileID: 813365651}
 --- !u!1 &46519820
 GameObject:
   m_ObjectHideFlags: 0
@@ -3732,7 +3732,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7762238, y: 1}
+    m_SensorSize: {x: 1.7775061, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -4203,7 +4203,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5358928910534228568, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}
       propertyPath: interType
-      value: 0
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5358928910534228568, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}
       propertyPath: ropeAnchor
@@ -4217,9 +4217,29 @@ PrefabInstance:
       propertyPath: ropeHingeAnchorSprite
       value: 
       objectReference: {fileID: 111837914}
+    - target: {fileID: 5358928910610738156, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5358928910696119227, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}
+      propertyPath: size.x
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 5358928910696119227, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}
+      propertyPath: size.y
+      value: 0.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 5358928911929953266, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}
+      propertyPath: size.y
+      value: 0.97
+      objectReference: {fileID: 0}
     - target: {fileID: 5358928911985323366, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}
       propertyPath: m_Name
       value: RopeAnchor
+      objectReference: {fileID: 0}
+    - target: {fileID: 5358928911985323366, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5358928911985323366, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}
       propertyPath: m_TagString
