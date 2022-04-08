@@ -1130,7 +1130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e38daa80b0696646bc05eec1440a7df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  time: 0
+  time: 3
   viewDistance: 13.43
   viewAngle: 1.32
   layerMask:

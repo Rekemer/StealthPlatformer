@@ -34,7 +34,7 @@ public class EnemyCamera : MonoBehaviour
 
     private IEnumerator RotateRoutine()
     {
-        iTween.RotateTo(gameObject, new Vector3(0, 0, -75f), time);
+        iTween.RotateTo(gameObject, iTween.Hash("z",-50f,"speed",25f,"looptype",iTween.LoopType.pingPong,"easetype", iTween.EaseType.linear));
         while (true)
         {
             yield return null;
