@@ -7,10 +7,10 @@ using UnityEngine;
 public class GrapplingHook : MonoBehaviour
 {
     // in what way we getting closer to hook 
-    [SerializeField] private LerpClass.InterType interType;
-    [SerializeField] private float speed;
-    [SerializeField] private float ropeMaxCastDistance;
-    [SerializeField] private RopeAnchor ropeAnchor;
+    [SerializeField] private LerpClass.InterType _interType;
+    [SerializeField] private float _speed;
+    [SerializeField] private float _ropeMaxCastDistance;
+    [SerializeField] private RopeAnchor _ropeAnchor;
     public SpriteRenderer crosshairSprite;
     public Transform crosshair;
     public LineRenderer ropeRenderer;
@@ -24,7 +24,7 @@ public class GrapplingHook : MonoBehaviour
     void Start()
     {
         ropeRenderer.enabled = false;
-        ropeAnchor.gameObject.SetActive(false);
+        _ropeAnchor.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -49,7 +49,7 @@ public class GrapplingHook : MonoBehaviour
     {
         ropeRenderer.SetPosition(0, transform.position);
         ropeRenderer.SetPosition(1, hitPos);
-        ropeAnchor.transform.position = hitPos;
+        _ropeAnchor.transform.position = hitPos;
     }
 
     private void SetCrosshairPosition(Vector3 mousePos)
@@ -86,7 +86,7 @@ public class GrapplingHook : MonoBehaviour
            
             ropeRenderer.enabled = true;
 
-            var hit = Physics2D.Raycast(transform.position, aimDirection, ropeMaxCastDistance, ropeLayerMask);
+            var hit = Physics2D.Raycast(transform.position, aimDirection, _ropeMaxCastDistance, ropeLayerMask);
 
             // 3
             if (hit.collider != null)
@@ -122,7 +122,7 @@ public class GrapplingHook : MonoBehaviour
 
     private void Hook()
     {
-        ropeAnchor.gameObject.SetActive(true);
+        _ropeAnchor.gameObject.SetActive(true);
         StartCoroutine(HookRoutine());
     }
 
@@ -134,9 +134,9 @@ public class GrapplingHook : MonoBehaviour
         float curSpeed = 0f;
         while (isRopeAttached)
         {
-            float acceleration = LerpClass.Lerp(t, interType);
+            float acceleration = LerpClass.Lerp(t, _interType);
             var direction = ((Vector3) hitPos - transform.position).normalized;
-            curSpeed = Mathf.Clamp(acceleration * speed, 0f, speed);
+            curSpeed = Mathf.Clamp(acceleration * _speed, 0f, _speed);
             var vel = (Vector2) direction * curSpeed;
             GetComponent<Rigidbody2D>().velocity = vel;
             t += Time.deltaTime;
@@ -146,7 +146,7 @@ public class GrapplingHook : MonoBehaviour
 
     private void Unhook()
     {
-        ropeAnchor.gameObject.SetActive(false);
+        _ropeAnchor.gameObject.SetActive(false);
         hitPos = transform.position;
         GetComponent<Move>().enabled = true;
         ResetRope();
@@ -165,8 +165,6 @@ public class GrapplingHook : MonoBehaviour
     {
         if (colliderStay.gameObject.CompareTag("Anchor"))
         {
-            Debug.Log("OnTriggerEnter2D");
-
             Unhook();
         }
     }
@@ -175,7 +173,7 @@ public class GrapplingHook : MonoBehaviour
     {
         if (colliderOnExit.gameObject.CompareTag("Anchor"))
         {
-            Debug.Log("OnTriggerExit2D");
+         
         }
     }
 }

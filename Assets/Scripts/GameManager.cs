@@ -16,28 +16,16 @@ public class GameManager : Singletone<GameManager>
     {
         timer.Init(maxTime);
         timeLeft = maxTime;
-        StartCountDown();
+        
     }
 
     void Update()
     {
-        if (IsGameWon)
-        {
-            UIManager.Instance.ShowWinScreen();
-        }
-        else
-        {
-            if (IsGameOver)
-            {
-                UIManager.Instance.ShowLoseScreen();
-            }
-            
-        }
+        
     }
     private void StartCountDown()
     {
         StartCoroutine(CountDownRoutine());
-        
     }
 
     IEnumerator CountDownRoutine()

@@ -5,18 +5,18 @@ namespace Core
 {
     public class RopeAnchor : MonoBehaviour
     {
-        private SpriteRenderer spriteRenderer;
-        private BoxCollider2D collider;
+        private SpriteRenderer _spriteRenderer;
+        private BoxCollider2D _collider;
 
         private void Awake()
         {
-            spriteRenderer = GetComponent<SpriteRenderer>();
-            collider = GetComponent<BoxCollider2D>();
+            _spriteRenderer = GetComponent<SpriteRenderer>();
+            _collider = GetComponent<BoxCollider2D>();
         }
 
         private void Start()
         {
-            collider.isTrigger = true;
+            _collider.isTrigger = true;
         }
 
       

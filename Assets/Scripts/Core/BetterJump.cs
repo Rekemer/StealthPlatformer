@@ -10,32 +10,32 @@ public class BetterJump : MonoBehaviour
     
     public float lowJumpMultiplier = 2f;
 
-    private Rigidbody2D rb;
+    private Rigidbody2D _rb;
 
-    private float gravity;
+    private float _gravity;
     // Start is called before the first frame update
     void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
     }
 
     private void Start()
     {
         // since gravity is calculated in move speed, we must apply it here too
-        gravity = Physics2D.gravity.y * rb.gravityScale;
+        _gravity = Physics2D.gravity.y * _rb.gravityScale;
     }
 
     // Update is called once per frame
     void Update()
     {
         // make fall a lot quicker
-        if (rb.velocity.y < 0)
+        if (_rb.velocity.y < 0)
         {
-            rb.velocity +=  Vector2.up * gravity * (fallMultiplier - 1) * Time.deltaTime;
+            _rb.velocity +=  Vector2.up * _gravity * (fallMultiplier - 1) * Time.deltaTime;
         }
-        else if (rb.velocity.y > 0 && !Input.GetButton("Jump")) // to jump lower when jump button is released
+        else if (_rb.velocity.y > 0 && !Input.GetButton("Jump")) // to jump lower when jump button is released
         {
-            rb.velocity += Vector2.up * gravity * (lowJumpMultiplier - 1) * Time.deltaTime;
+            _rb.velocity += Vector2.up * _gravity * (lowJumpMultiplier - 1) * Time.deltaTime;
         }
     }
 }
