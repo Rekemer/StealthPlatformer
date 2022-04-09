@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Enemy;
 using UnityEngine;
 
 public class Patrol : IState

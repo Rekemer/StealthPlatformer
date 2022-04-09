@@ -1,4 +1,5 @@
 ﻿using System;
+using Enemy;
 using UnityEngine;
 
 public class Attack : IState
@@ -7,7 +8,7 @@ public class Attack : IState
 
     public void Tick()
     {
-        Debug.Log("Player is Attacked");
+        _enemy.Attack();
     }
 
     public void OnExit()

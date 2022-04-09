@@ -1,7 +1,10 @@
 ﻿
-    public interface IEnemy
+    namespace Enemy
     {
-        void Patrol();
-        void Attack();
+        public interface IEnemy
+        {
+            void Patrol();
+            void Attack();
      
+        }
     }
