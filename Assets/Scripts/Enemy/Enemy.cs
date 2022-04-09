@@ -55,8 +55,9 @@ public class Enemy : MonoBehaviour, IEnemy
         float rightAngleInRadians = viewAngleInDegrees / 2* Mathf.Deg2Rad;
         var leftVector = GetVectorFromAngle(leftAngleInRadians).normalized;
         var rightVector = GetVectorFromAngle(rightAngleInRadians).normalized;
-        Gizmos.DrawLine(transform.position,transform.position + (Vector3)leftVector * viewDistance);
-        Gizmos.DrawLine(transform.position,transform.position + (Vector3)rightVector * viewDistance);
+        Gizmos.matrix = transform.localToWorldMatrix;
+        Gizmos.DrawLine(Vector3.zero, (Vector3) leftVector * viewDistance);
+        Gizmos.DrawLine(Vector3.zero, (Vector3) rightVector * viewDistance);
     }
 
     Vector2 GetVectorFromAngle(float angle)
@@ -72,7 +73,7 @@ public class Enemy : MonoBehaviour, IEnemy
         if ((transform.position - playerPos.position).sqrMagnitude < Mathf.Pow(viewDistance, 2))
         {
             Vector2 dirToPlayer = (playerPos.position - transform.position).normalized;
-            float angle = Vector3.Angle(transform.right, dirToPlayer) * Mathf.Deg2Rad;
+            float angle = Vector3.Angle(transform.right, dirToPlayer);
 
             if (angle < viewAngleInDegrees / 2f)
             {

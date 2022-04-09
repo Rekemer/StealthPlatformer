@@ -60,25 +60,7 @@ public class EnemyCamera : MonoBehaviour, IEnemy
     {
         stateMachine.Tick();
     }
-
-    public void Rotate()
-    {
-        if (transform.rotation.eulerAngles.z * Mathf.Rad2Deg > 0)
-        {
-            iTween.RotateTo(gameObject,
-                iTween.Hash("z", -viewAngleInDegrees / 2 * Mathf.Rad2Deg, "time", time, "looptype", iTween.LoopType.pingPong,
-                    "easetype",
-                    iTween.EaseType.linear));
-        }
-        else
-        {
-            iTween.RotateTo(gameObject,
-                iTween.Hash("z", viewAngleInDegrees / 2 * Mathf.Rad2Deg, "time", time, "looptype", iTween.LoopType.pingPong,
-                    "easetype",
-                    iTween.EaseType.linear));
-        }
-    }
-
+    
 
     private void OnDrawGizmos()
     {
@@ -105,7 +87,7 @@ public class EnemyCamera : MonoBehaviour, IEnemy
         if ((transform.position - playerPos.position).sqrMagnitude < Mathf.Pow(viewDistance, 2))
         {
             Vector2 dirToPlayer = (playerPos.position - transform.position).normalized;
-            float angle = Vector3.Angle(transform.right, dirToPlayer) * Mathf.Deg2Rad;
+            float angle = Vector3.Angle(transform.right, dirToPlayer);
 
             if (angle < viewAngleInDegrees / 2f)
             {
