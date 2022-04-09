@@ -41,7 +41,6 @@ public class Beep : MonoBehaviour
         while (currentColor != targetColour)
         {
             t+=Time.deltaTime;
-            Debug.Log(t);
             var interp = LerpClass.Lerp(t,_interType);
             currentColor = Color.Lerp(currentColor, targetColour, interp);
             _spriteRenderer.color = currentColor;

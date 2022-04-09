@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class StateMachine
 {
-    private State currentState;
+    private IState currentState;
     // transitions of each state
     private Dictionary<Type, List<Transition>> _transitions = new Dictionary<Type,List<Transition>>();
     // transitions of current state
@@ -14,7 +14,11 @@ public class StateMachine
     // transitions that are relevant to all states
     private List<Transition> _anyTransitions = new List<Transition>();
     private List<Transition> _emptyTransitions = new List<Transition>();
-    
+
+    public IState GetCurrentState()
+    {
+        return currentState;
+    }
     public void Tick()
     {
         var transition = GetTransition();
@@ -24,7 +28,7 @@ public class StateMachine
         currentState?.Tick();
     }
 
-    public void AddTransition(State from,State t0,Func<bool> predicate)
+    public void AddTransition(IState from,IState t0,Func<bool> predicate)
     {
         if (_transitions.TryGetValue(from.GetType(), out var transitions) == false)
         {
@@ -33,7 +37,7 @@ public class StateMachine
         }
         transitions.Add(new Transition(t0,predicate));
     }
-    public void SetState(State state)
+    public void SetState(IState state)
     {
         if (state == currentState ) return; // ==, equals, referenceEquals and MonoBehaviour?
         currentState?.OnExit();
@@ -60,9 +64,9 @@ public class StateMachine
     public class Transition
     {
         public Func<bool> Condition {get; }
-        public State To { get; }
+        public IState To { get; }
 
-        public Transition(State to, Func<bool> condition)
+        public Transition(IState to, Func<bool> condition)
         {
             To = to;
             Condition = condition;

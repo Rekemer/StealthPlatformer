@@ -2,27 +2,29 @@
 using System.Collections;
 using UnityEngine;
 
-public class Idle : State
+public class Patrol : IState
 {
     private IEnumerator currentRoutine;
+    private IEnemy _enemy;
     private bool isFollowing;
-    public Idle(Enemy enemy) : base(enemy)
+    public Patrol(IEnemy enemy) 
     {
+        _enemy = enemy;
     }
 
-    public override void Tick()
+    public  void Tick()
     {
         if (!isFollowing)
         {
-            enemy.FollowRoute();
+            _enemy.Patrol();
             isFollowing = true;
         }
         
     }
 
-    public override void OnExit()
+    public  void OnExit()
     {
-       
+        
     }
 
     

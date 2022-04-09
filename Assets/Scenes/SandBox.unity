@@ -328,7 +328,7 @@ Transform:
   m_GameObject: {fileID: 103642549}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.41, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -0.4, y: 1, z: 1}
   m_Children:
   - {fileID: 846346809}
   m_Father: {fileID: 535437994}
@@ -1110,14 +1110,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 535437993}
-  m_LocalRotation: {x: 0, y: 0, z: 0.16091481, w: 0.98696834}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.65, y: 10.27, z: 0}
-  m_LocalScale: {x: 0.37288, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 103642550}
   m_Father: {fileID: 0}
   m_RootOrder: 10
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 18.52}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &535437995
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1131,11 +1131,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   time: 3
-  viewDistance: 13.43
-  viewAngle: 1.32
+  viewDistance: 7.18
+  viewAngleInDegrees: 60.27
   layerMask:
     serializedVersion: 2
     m_Bits: 0
+  speed: 2
 --- !u!1 &570470060
 GameObject:
   m_ObjectHideFlags: 0
@@ -3741,7 +3742,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 2
-    m_SensorSize: {x: 1.7767584, y: 1}
+    m_SensorSize: {x: 1.7765363, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
@@ -4162,7 +4163,7 @@ MonoBehaviour:
   - {x: 5.91, y: 0, z: 0}
   defaultSpeed: 5
   viewDistance: 11.22
-  viewAngle: 1.18
+  viewAngleInDegrees: 74.84
   layerMask:
     serializedVersion: 2
     m_Bits: 64

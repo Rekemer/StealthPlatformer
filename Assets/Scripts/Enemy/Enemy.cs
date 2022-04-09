@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-public class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour, IEnemy
 {
     private StateMachine stateMachine = new StateMachine();
     [SerializeField] private Vector3[] patrolRoute;
@@ -12,7 +12,7 @@ public class Enemy : MonoBehaviour
 
     public float viewDistance = 4;
     private Transform playerPos;
-    [SerializeField] private  float viewAngle;
+    [SerializeField] private  float viewAngleInDegrees;
     [SerializeField] private LayerMask layerMask;
     private void Awake()
     {
@@ -27,10 +27,10 @@ public class Enemy : MonoBehaviour
             globalPatrolRoute[i] = transform.position + patrolRoute[i];
         }
 
-        var idle = new Idle(this);
-        var Attack = new Attack(this);
-        InitTransition(idle,Attack,CanSeePlayer);
-        stateMachine.SetState(idle);
+        var patrol = new Patrol(this);
+        var attack = new Attack(this);
+        InitTransition(patrol,attack,CanSeePlayer);
+        stateMachine.SetState(patrol);
     }
 
     // Update is called once per frame
@@ -51,10 +51,10 @@ public class Enemy : MonoBehaviour
         }
 
         //draw field of view
-        float leftAngle = -viewAngle / 2; 
-        float rightAngle = viewAngle / 2;
-        var leftVector = GetVectorFromAngle(leftAngle);
-        var rightVector = GetVectorFromAngle(rightAngle);
+        float leftAngleInRadians = -viewAngleInDegrees / 2 * Mathf.Deg2Rad; 
+        float rightAngleInRadians = viewAngleInDegrees / 2* Mathf.Deg2Rad;
+        var leftVector = GetVectorFromAngle(leftAngleInRadians).normalized;
+        var rightVector = GetVectorFromAngle(rightAngleInRadians).normalized;
         Gizmos.DrawLine(transform.position,transform.position + (Vector3)leftVector * viewDistance);
         Gizmos.DrawLine(transform.position,transform.position + (Vector3)rightVector * viewDistance);
     }
@@ -62,7 +62,6 @@ public class Enemy : MonoBehaviour
     Vector2 GetVectorFromAngle(float angle)
     {
         // conversion between Unity circle and default trigonometry circle = 90 - angle
-        angle += Mathf.Abs(transform.eulerAngles.y * Mathf.Deg2Rad);
         float x = Mathf.Cos(angle);
         float y = Mathf.Sin(angle);
         return new Vector2(x, y);
@@ -75,7 +74,7 @@ public class Enemy : MonoBehaviour
             Vector2 dirToPlayer = (playerPos.position - transform.position).normalized;
             float angle = Vector3.Angle(transform.right, dirToPlayer) * Mathf.Deg2Rad;
 
-            if (angle < viewAngle / 2f)
+            if (angle < viewAngleInDegrees / 2f)
             {
                 if (!Physics2D.Linecast(transform.position, playerPos.position, layerMask))
                 {
@@ -87,16 +86,23 @@ public class Enemy : MonoBehaviour
         return false;
     }
 
-    private void InitTransition(State from, State to, Func<bool> predicate)
+    private void InitTransition(IState from, IState to, Func<bool> predicate)
     {
         stateMachine.AddTransition(from,to,predicate);
     }
-    public void FollowRoute()
+    public void Patrol()
     {
-        StartCoroutine(FollowRoute(globalPatrolRoute));
+        StartCoroutine(PatrolRoutine(globalPatrolRoute));
     }
 
-    IEnumerator FollowRoute(Vector3[] waypoints)
+    public void Attack()
+    {
+        
+    }
+
+ 
+
+    IEnumerator PatrolRoutine(Vector3[] waypoints)
     {
         transform.position = waypoints[0];
 
@@ -105,7 +111,7 @@ public class Enemy : MonoBehaviour
         Vector3 targetWayPoint = waypoints[0];
 
         TurnTo(targetWayPoint);
-        while (true)
+        while (stateMachine.GetCurrentState() is Patrol)
         {
             targetWayPoint.y = transform.position.y;
             transform.position = Vector2.MoveTowards(transform.position, targetWayPoint, defaultSpeed * Time.deltaTime);

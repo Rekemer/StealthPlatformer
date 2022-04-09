@@ -1,19 +1,21 @@
 ﻿using System;
 using UnityEngine;
 
-public class Attack : State
+public class Attack : IState
 {
-    public override void Tick()
+    private IEnemy _enemy;
+
+    public void Tick()
     {
         Debug.Log("Player is Attacked");
     }
 
-    public override void OnExit()
+    public void OnExit()
     {
-        
     }
 
-    public Attack(Enemy enemy) : base(enemy)
+    public Attack(IEnemy enemy)
     {
+        _enemy = enemy;
     }
 }
