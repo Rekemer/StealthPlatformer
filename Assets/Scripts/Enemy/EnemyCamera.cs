@@ -50,6 +50,7 @@ namespace Enemy
         public void Attack()
         {
             Debug.Log("CAMERA ENEMY: gotcha! ");
+            GameManager.Instance.IsGameOver = true;
         }
 
 
