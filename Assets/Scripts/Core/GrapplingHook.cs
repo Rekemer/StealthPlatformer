@@ -11,14 +11,16 @@ public class GrapplingHook : MonoBehaviour
     [SerializeField] private float _speed;
     [SerializeField] private float _ropeMaxCastDistance;
     [SerializeField] private RopeAnchor _ropeAnchor;
+    [SerializeField] private float _coolDown;
+    private bool _isHookAvailable = true;
+    private bool _isRopeAttached;
+    private Vector2 _hitPos;
+    
     public SpriteRenderer crosshairSprite;
     public Transform crosshair;
     public LineRenderer ropeRenderer;
     public LayerMask ropeLayerMask;
 
-    private bool isRopeAttached;
-
-    private Vector2 hitPos;
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +32,8 @@ public class GrapplingHook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var worldMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y,Camera.main.nearClipPlane));
+        var worldMousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x,
+            Input.mousePosition.y, Camera.main.nearClipPlane));
         var facingDirection = worldMousePosition - transform.position;
         var aimAngle = Mathf.Atan2(facingDirection.y, facingDirection.x);
 
@@ -48,8 +51,8 @@ public class GrapplingHook : MonoBehaviour
     private void UpdateLineRenderer()
     {
         ropeRenderer.SetPosition(0, transform.position);
-        ropeRenderer.SetPosition(1, hitPos);
-        _ropeAnchor.transform.position = hitPos;
+        ropeRenderer.SetPosition(1, _hitPos);
+        _ropeAnchor.transform.position = _hitPos;
     }
 
     private void SetCrosshairPosition(Vector3 mousePos)
@@ -58,10 +61,10 @@ public class GrapplingHook : MonoBehaviour
         {
             crosshairSprite.enabled = true;
         }
-        
+
         crosshair.transform.position = mousePos;
     }
-    
+
 
     private void SetCrosshairPosition(float aimAngle)
     {
@@ -82,8 +85,8 @@ public class GrapplingHook : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             // 2
-            if (isRopeAttached) return;
-           
+            if (_isRopeAttached || !_isHookAvailable) return;
+
             ropeRenderer.enabled = true;
 
             var hit = Physics2D.Raycast(transform.position, aimDirection, _ropeMaxCastDistance, ropeLayerMask);
@@ -91,10 +94,11 @@ public class GrapplingHook : MonoBehaviour
             // 3
             if (hit.collider != null)
             {
-                hitPos = hit.point;
+                _hitPos = hit.point;
                 ropeRenderer.SetPosition(0, transform.position);
-                ropeRenderer.SetPosition(1, hitPos);
-                isRopeAttached = true;
+                ropeRenderer.SetPosition(1, _hitPos);
+                _isRopeAttached = true;
+                StartCoroutine(StartCooldown());
                 // start hooking
                 Hook();
             }
@@ -102,7 +106,7 @@ public class GrapplingHook : MonoBehaviour
             else
             {
                 ropeRenderer.enabled = false;
-                isRopeAttached = false;
+                _isRopeAttached = false;
             }
         }
 
@@ -110,14 +114,21 @@ public class GrapplingHook : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             // check if hooking
-            if (isRopeAttached)
+            if (_isRopeAttached)
             {
                 Unhook();
-                isRopeAttached = false;
+                _isRopeAttached = false;
             }
 
             ResetRope();
         }
+    }
+
+    public IEnumerator StartCooldown()
+    {
+        _isHookAvailable = false;
+        yield return new WaitForSeconds(_coolDown);
+        _isHookAvailable = true;
     }
 
     private void Hook()
@@ -132,10 +143,10 @@ public class GrapplingHook : MonoBehaviour
         GetComponent<Move>().enabled = false;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         float curSpeed = 0f;
-        while (isRopeAttached)
+        while (_isRopeAttached)
         {
             float acceleration = LerpClass.Lerp(t, _interType);
-            var direction = ((Vector3) hitPos - transform.position).normalized;
+            var direction = ((Vector3) _hitPos - transform.position).normalized;
             curSpeed = Mathf.Clamp(acceleration * _speed, 0f, _speed);
             var vel = (Vector2) direction * curSpeed;
             GetComponent<Rigidbody2D>().velocity = vel;
@@ -147,14 +158,14 @@ public class GrapplingHook : MonoBehaviour
     private void Unhook()
     {
         _ropeAnchor.gameObject.SetActive(false);
-        hitPos = transform.position;
+        _hitPos = transform.position;
         GetComponent<Move>().enabled = true;
         ResetRope();
     }
 
     private void ResetRope()
     {
-        isRopeAttached = false;
+        _isRopeAttached = false;
         ropeRenderer.positionCount = 2;
         ropeRenderer.enabled = false;
         ropeRenderer.SetPosition(0, transform.position);
@@ -173,7 +184,6 @@ public class GrapplingHook : MonoBehaviour
     {
         if (colliderOnExit.gameObject.CompareTag("Anchor"))
         {
-         
         }
     }
 }
