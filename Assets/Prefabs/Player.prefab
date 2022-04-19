@@ -162,6 +162,7 @@ MonoBehaviour:
   _jumpHeight: 4
   _timeToJumpApex: 0.4
   _wallSlidingSpeed: 0.4
+  _timeWallStick: 5
 --- !u!114 &5358928910534228569
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,6 +292,7 @@ MonoBehaviour:
   _speed: 40
   _ropeMaxCastDistance: 20
   _ropeAnchor: {fileID: 111837914}
+  _coolDown: 3
   crosshairSprite: {fileID: 5358928910610738158}
   crosshair: {fileID: 5358928910610738159}
   ropeRenderer: {fileID: 5358928910534228575}
@@ -405,7 +407,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5358928910696119225}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.40399933, y: 0.0009999922, z: 0}
+  m_LocalPosition: {x: -0.42, y: 0.0009999922, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5358928912208916706}
@@ -423,7 +425,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 774992dc19404707a392fb8e1aab72c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 0.24, y: 0.97}
+  size: {x: 0.33, y: 0.97}
 --- !u!1 &5358928911200962717
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,7 +495,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5358928911929953265}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.3939972, y: 0.0019999845, z: 0}
+  m_LocalPosition: {x: 0.42, y: 0.0019999845, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 5358928912208916706}
@@ -511,7 +513,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 774992dc19404707a392fb8e1aab72c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: {x: 0.24, y: 0.97}
+  size: {x: 0.33, y: 0.97}
 --- !u!1 &5358928911985323366
 GameObject:
   m_ObjectHideFlags: 0

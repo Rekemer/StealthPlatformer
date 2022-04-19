@@ -110,10 +110,10 @@ public class Move : MonoBehaviour
             // if we wall slide and want to move from wall - give time interval for wall jumping
             if (!_hasBeenInvoked && (_isTouchingLeft && _horizontal > 0 || _isTouchingRight && _horizontal < 0))
             {
-                Debug.Log("Invoked");
+               
                 _leftPrevious = _isTouchingLeft;
                 _rightPrevious = _isTouchingRight;
-                Invoke("ResetWallSliding", 0.1f);
+                Invoke("ResetWallSliding", 0.3f);
                 _hasBeenInvoked = true;
             }
         }
@@ -142,6 +142,7 @@ public class Move : MonoBehaviour
 
     private void FixedUpdate()
     {
+        
         _rb.velocity = new Vector2(_xVelocity, _rb.velocity.y);
         if (_time > 0) // space bar
         {
@@ -160,7 +161,7 @@ public class Move : MonoBehaviour
             if (_rightPrevious && _xVelocity < 0 || _leftPrevious && _xVelocity > 0)
             {
                 _rb.velocity = new Vector2(_xVelocity, _jumpVelocity);
-                _CanSecondJump = true;
+               // _CanSecondJump = true;
             }
         }
     }

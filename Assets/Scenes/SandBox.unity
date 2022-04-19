@@ -3846,14 +3846,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5358928910534228570, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}
-      propertyPath: _timeWallStick
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5358928910534228570, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}
-      propertyPath: _wallStickTime
-      value: 0.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}
 --- !u!1001 &6691069655404699939
