@@ -10,20 +10,23 @@ using UnityEngine;
 public class Move : MonoBehaviour
 {
     [SerializeField] private float _speed;
-    
+
     [SerializeField] private Detector _groundCheck;
     [SerializeField] private Detector _leftWallCheck;
     [SerializeField] private Detector _rightWallCheck;
-    
-    
+
+
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private float _horizontalDamping;
     [SerializeField] private float _jumpHeight = 4f;
     [SerializeField] private float _timeToJumpApex = .4f;
     [SerializeField] private float _wallSlidingSpeed = .4f;
-    
+    [SerializeField] private float _timeWallStick;
+    private float _timeWallUnstick;
     private float _jumpVelocity;
-    private float _timeToRemember = .2f; // time interval when jump button is pressed - to be able to jump before being grounded
+
+    private float
+        _timeToRemember = .2f; // time interval when jump button is pressed - to be able to jump before being grounded
 
     private Rigidbody2D _rb;
     private float _time = 0f;
@@ -36,13 +39,16 @@ public class Move : MonoBehaviour
     private bool _isWallJumping;
     private bool _isTouchingRight;
     private bool _isTouchingLeft;
+    
+    private bool _hasBeenInvoked;
+    private bool _leftPrevious;
+    private bool _rightPrevious;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
     }
 
 
-    
     // using physics equation to calculate parabola trajectory jumping
     //https://www.youtube.com/watch?v=hG9SzQxaCm8&t=517s&ab_channel=GDC
     void Start()
@@ -52,13 +58,13 @@ public class Move : MonoBehaviour
         _rb.gravityScale = scale;
         _jumpVelocity = Mathf.Abs(_timeToJumpApex * Physics2D.gravity.y * _rb.gravityScale);
     }
-    
-  
+
+
     void Update()
     {
         _horizontal = Input.GetAxis("Horizontal");
         _spaceBar = Input.GetButtonDown("Jump");
-        CheckGround();
+        CheckCollisions();
         if (_isWallSliding)
         {
             _CanSecondJump = false;
@@ -66,8 +72,9 @@ public class Move : MonoBehaviour
         else
         {
             if (_isGrounded)
-            _CanSecondJump = true;
+                _CanSecondJump = true;
         }
+
         // basic xVelocity 
         _xVelocity = _horizontal * _speed;
         if (_isGrounded)
@@ -81,30 +88,67 @@ public class Move : MonoBehaviour
         {
             _time = _timeToRemember;
         }
-        if (_isWallSliding && _time < 0)
-        {
-            _xVelocity = 0;
-        }
     }
 
-    private void CheckGround()
+    
+
+    private void CheckCollisions()
     {
         _isGrounded = Physics2D.OverlapBox(_groundCheck.transform.position, _groundCheck.Size, 0f, _layerMask);
         _isTouchingRight = Physics2D.OverlapBox(_rightWallCheck.transform.position, _rightWallCheck.Size, 0f, _layerMask);
         _isTouchingLeft = Physics2D.OverlapBox(_leftWallCheck.transform.position, _leftWallCheck.Size, 0f, _layerMask);
-        _isWallSliding = (_isTouchingLeft || _isTouchingRight) && !_isGrounded && _horizontal != 0;
-      
+         UpdateWallSliding();
+    }
+
+    private void UpdateWallSliding()
+    {
+        if (_isWallSliding)
+        {
+            // start countdown 
+            StartCoroutine(CountDown());
+
+            // if we wall slide and want to move from wall - give time interval for wall jumping
+            if (!_hasBeenInvoked && (_isTouchingLeft && _horizontal > 0 || _isTouchingRight && _horizontal < 0))
+            {
+                Debug.Log("Invoked");
+                _leftPrevious = _isTouchingLeft;
+                _rightPrevious = _isTouchingRight;
+                Invoke("ResetWallSliding", 0.1f);
+                _hasBeenInvoked = true;
+            }
+        }
+
+        _isWallSliding = (_isTouchingLeft || _isTouchingRight) && !_isGrounded;
+    }
+
+    IEnumerator CountDown()
+    {
+        _timeWallUnstick = _timeWallStick;
+        while (_isWallSliding)
+        {
+            _timeWallUnstick -= Time.deltaTime;
+            if (_timeWallUnstick < 0)
+            {
+                _isWallSliding = false;
+            }
+            yield return null;
+        }
+    }
+    void ResetWallSliding()
+    {
+        _isWallSliding = false;
+        _hasBeenInvoked = false;
     }
 
     private void FixedUpdate()
     {
-       
         _rb.velocity = new Vector2(_xVelocity, _rb.velocity.y);
         if (_time > 0) // space bar
         {
             DoubleJump();
             WallJumping();
         }
+
         WallSlide();
     }
 
@@ -113,17 +157,17 @@ public class Move : MonoBehaviour
         if (_isWallSliding)
         {
             _time = 0;
-            if (_isTouchingRight && _xVelocity < 0 || _isTouchingLeft && _xVelocity > 0)
+            if (_rightPrevious && _xVelocity < 0 || _leftPrevious && _xVelocity > 0)
             {
                 _rb.velocity = new Vector2(_xVelocity, _jumpVelocity);
-               
+                _CanSecondJump = true;
             }
         }
     }
 
     private void WallSlide()
     {
-        if (_isWallSliding && _time <= 0)
+        if (_isWallSliding)
         {
             var newYVel = Mathf.Clamp(_rb.velocity.y, -_wallSlidingSpeed, float.MaxValue);
             _rb.velocity = new Vector2(_rb.velocity.x, newYVel);
@@ -151,8 +195,7 @@ public class Move : MonoBehaviour
         _rb.velocity = new Vector2(_rb.velocity.x, _jumpVelocity);
     }
 
-    
-    
+
 #if UNITY_EDITOR
     // method drawing our ground checkers in scene
     private void OnDrawGizmosSelected()
