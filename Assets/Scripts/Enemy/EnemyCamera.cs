@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 namespace Enemy
 {
     public class EnemyCamera : EnemyBase, IEnemy
     {
-      
-
+        
         private void Awake()
         {
             playerPos = FindObjectOfType<Move>().transform;
@@ -19,8 +19,16 @@ namespace Enemy
             var attack = new Attack(this);
             InitTransition(patrol, attack, CanSeePlayer);
             stateMachine.SetState(patrol);
+            SetAngleOfLight();
         }
 
+        private void OnValidate()
+        {
+            SetAngleOfLight();
+        }
+
+        
+        
         public void Patrol()
         {
             StartCoroutine(PatrolRoutine());

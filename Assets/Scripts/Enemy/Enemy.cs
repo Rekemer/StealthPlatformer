@@ -1,13 +1,14 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 namespace Enemy
 {
     public class Enemy : EnemyBase, IEnemy
     {
         [SerializeField] private Vector3[] patrolRoute;
-        
+
         public Vector3[] globalPatrolRoute { get; private set; }
 
        
@@ -51,8 +52,22 @@ namespace Enemy
             DrawAngle();
         }
 
-      
-
+        private void OnValidate()
+        {
+            SetAngleOfLight();
+        }
+        
+        void SetAngleOfLight()
+        {
+            if (_light2D != null)
+            {
+                _light2D.pointLightOuterAngle = viewAngleInDegrees;
+                _light2D.pointLightInnerAngle = viewAngleInDegrees;
+                _light2D.pointLightOuterRadius = viewDistance + 0.1f;
+                _light2D.pointLightInnerRadius = viewDistance;
+            }
+        }
+        
         public void Patrol()
         {
             StartCoroutine(PatrolRoutine(globalPatrolRoute));

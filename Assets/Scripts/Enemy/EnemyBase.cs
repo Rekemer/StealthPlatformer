@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Experimental.Rendering.Universal;
 
 namespace Enemy
 {
@@ -8,10 +9,21 @@ namespace Enemy
         [SerializeField] protected float speed;
         [SerializeField] protected float viewDistance = 4;
         [SerializeField] protected float viewAngleInDegrees;
-        [SerializeField] protected LayerMask layerMask;
+        [SerializeField] protected LayerMask layerMask; 
+        [SerializeField] protected  Light2D _light2D;
         protected Transform playerPos;
         protected StateMachine stateMachine = new StateMachine();
         
+        protected void SetAngleOfLight()
+        {
+            if (_light2D != null)
+            {
+                _light2D.pointLightOuterAngle = viewAngleInDegrees;
+                _light2D.pointLightInnerAngle = viewAngleInDegrees;
+                _light2D.pointLightOuterRadius = viewDistance + 0.5f;
+                _light2D.pointLightInnerRadius = viewDistance;
+            }
+        }
         protected Vector2 GetVectorFromAngle(float angle)
         {
             // conversion between Unity circle and default trigonometry circle = 90 - angle
