@@ -60,10 +60,11 @@ public class Move : MonoBehaviour
         _jumpVelocity = Mathf.Abs(_timeToJumpApex * Physics2D.gravity.y * _rb.gravityScale);
     }
 
-
+    
     void Update()
     {
         _horizontal = Input.GetAxis("Horizontal");
+      
         _spaceBar = Input.GetButtonDown("Jump");
         _isShiftPressed = Input.GetKey(KeyCode.LeftShift);
         CheckCollisions();
@@ -119,7 +120,9 @@ public class Move : MonoBehaviour
             }
         }
 
-        _isWallSliding = (_isTouchingLeft || _isTouchingRight) && !_isGrounded;
+        var hitLeft = CastRayToDirection(Vector2.left);
+        var hitRight = CastRayToDirection(Vector2.right);
+        _isWallSliding = (hitLeft || hitRight) && !_isGrounded;
     }
 
     IEnumerator CountDown()
@@ -156,15 +159,23 @@ public class Move : MonoBehaviour
         WallSlide();
     }
 
+    bool CastRayToDirection(Vector2 direction)
+    {
+        direction.y = 0;
+        direction.Normalize();
+        var hit = Physics2D.Raycast(transform.position, direction, 0.7f, _layerMask);
+        return  hit;
+    }
     private void ApplyVelocity()
     {
         Vector3 horizontalMove = new Vector2(_xVelocity, _rb.velocity.y);
         horizontalMove.y = 0;
         horizontalMove.Normalize();
-        var hit = Physics2D.Raycast(transform.position, horizontalMove, 0.55f, _layerMask);
-        if (hit)
+        var hit = Physics2D.Raycast(transform.position+ (Vector3)Vector2.up * 0.5f, horizontalMove, 0.55f, _layerMask);
+        var hit1 = Physics2D.Raycast(transform.position+ (Vector3)Vector2.down * 0.5f, horizontalMove, 0.55f, _layerMask);
+        if (hit || hit1)
         {
-            Debug.Log("got hit");
+           
             // If so, stop the movement
             _rb.velocity = new Vector3(0, _rb.velocity.y);
         }
@@ -179,17 +190,22 @@ public class Move : MonoBehaviour
         if (_isWallSliding)
         {
             _time = 0;
-            if (_rightPrevious && _xVelocity < 0 || _leftPrevious && _xVelocity > 0)
+            if (_isTouchingRight && _horizontal < 0 || _isTouchingLeft && _horizontal > 0)
             {
                 
+                Debug.Log("jmp");
                 _rb.velocity = new Vector2(_xVelocity, _jumpVelocity);
                 // _CanSecondJump = true;
             }
         }
     }
 
+   
+    
+
     private void WallSlide()
     {
+      
         if (_isWallSliding && _isShiftPressed)
         {
             
@@ -207,6 +223,7 @@ public class Move : MonoBehaviour
         }
         else if (_CanSecondJump)
         {
+            //_rb.AddForce(Vector2.up * _jumpVelocity,ForceMode2D.Impulse);
             Jump();
             _CanSecondJump = false;
         }
