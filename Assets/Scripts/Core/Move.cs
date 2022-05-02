@@ -39,10 +39,11 @@ public class Move : MonoBehaviour
     private bool _isWallJumping;
     private bool _isTouchingRight;
     private bool _isTouchingLeft;
-    
+    private bool _isShiftPressed;
     private bool _hasBeenInvoked;
     private bool _leftPrevious;
     private bool _rightPrevious;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -64,6 +65,7 @@ public class Move : MonoBehaviour
     {
         _horizontal = Input.GetAxis("Horizontal");
         _spaceBar = Input.GetButtonDown("Jump");
+        _isShiftPressed = Input.GetKey(KeyCode.LeftShift);
         CheckCollisions();
         if (_isWallSliding)
         {
@@ -90,14 +92,14 @@ public class Move : MonoBehaviour
         }
     }
 
-    
 
     private void CheckCollisions()
     {
         _isGrounded = Physics2D.OverlapBox(_groundCheck.transform.position, _groundCheck.Size, 0f, _layerMask);
-        _isTouchingRight = Physics2D.OverlapBox(_rightWallCheck.transform.position, _rightWallCheck.Size, 0f, _layerMask);
+        _isTouchingRight =
+            Physics2D.OverlapBox(_rightWallCheck.transform.position, _rightWallCheck.Size, 0f, _layerMask);
         _isTouchingLeft = Physics2D.OverlapBox(_leftWallCheck.transform.position, _leftWallCheck.Size, 0f, _layerMask);
-         UpdateWallSliding();
+        UpdateWallSliding();
     }
 
     private void UpdateWallSliding()
@@ -110,7 +112,6 @@ public class Move : MonoBehaviour
             // if we wall slide and want to move from wall - give time interval for wall jumping
             if (!_hasBeenInvoked && (_isTouchingLeft && _horizontal > 0 || _isTouchingRight && _horizontal < 0))
             {
-               
                 _leftPrevious = _isTouchingLeft;
                 _rightPrevious = _isTouchingRight;
                 Invoke("ResetWallSliding", 0.3f);
@@ -131,9 +132,11 @@ public class Move : MonoBehaviour
             {
                 _isWallSliding = false;
             }
+
             yield return null;
         }
     }
+
     void ResetWallSliding()
     {
         _isWallSliding = false;
@@ -142,8 +145,8 @@ public class Move : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
-        _rb.velocity = new Vector2(_xVelocity, _rb.velocity.y);
+        ApplyVelocity();
+
         if (_time > 0) // space bar
         {
             DoubleJump();
@@ -153,6 +156,24 @@ public class Move : MonoBehaviour
         WallSlide();
     }
 
+    private void ApplyVelocity()
+    {
+        Vector3 horizontalMove = new Vector2(_xVelocity, _rb.velocity.y);
+        horizontalMove.y = 0;
+        horizontalMove.Normalize();
+        var hit = Physics2D.Raycast(transform.position, horizontalMove, 0.55f, _layerMask);
+        if (hit)
+        {
+            Debug.Log("got hit");
+            // If so, stop the movement
+            _rb.velocity = new Vector3(0, _rb.velocity.y);
+        }
+        else
+        {
+            _rb.velocity = new Vector2(_xVelocity, _rb.velocity.y);
+        }
+    }
+
     private void WallJumping()
     {
         if (_isWallSliding)
@@ -160,16 +181,18 @@ public class Move : MonoBehaviour
             _time = 0;
             if (_rightPrevious && _xVelocity < 0 || _leftPrevious && _xVelocity > 0)
             {
+                
                 _rb.velocity = new Vector2(_xVelocity, _jumpVelocity);
-               // _CanSecondJump = true;
+                // _CanSecondJump = true;
             }
         }
     }
 
     private void WallSlide()
     {
-        if (_isWallSliding)
+        if (_isWallSliding && _isShiftPressed)
         {
+            
             var newYVel = Mathf.Clamp(_rb.velocity.y, -_wallSlidingSpeed, float.MaxValue);
             _rb.velocity = new Vector2(_rb.velocity.x, newYVel);
         }
