@@ -39,7 +39,7 @@ public class Move : MonoBehaviour
     private bool _isWallJumping;
     private bool _isTouchingRight;
     private bool _isTouchingLeft;
-    private bool _isShiftPressed;
+    private bool _isRightButtonPressed;
     private bool _hasBeenInvoked;
     private bool _leftPrevious;
     private bool _rightPrevious;
@@ -64,9 +64,9 @@ public class Move : MonoBehaviour
     void Update()
     {
         _horizontal = Input.GetAxis("Horizontal");
-      
+        
         _spaceBar = Input.GetButtonDown("Jump");
-        _isShiftPressed = Input.GetKey(KeyCode.LeftShift);
+        _isRightButtonPressed = Input.GetMouseButton(1);
         CheckCollisions();
         if (_isWallSliding)
         {
@@ -206,7 +206,7 @@ public class Move : MonoBehaviour
     private void WallSlide()
     {
       
-        if (_isWallSliding && _isShiftPressed)
+        if (_isWallSliding && _isRightButtonPressed)
         {
             
             var newYVel = Mathf.Clamp(_rb.velocity.y, -_wallSlidingSpeed, float.MaxValue);
