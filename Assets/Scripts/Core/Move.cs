@@ -97,48 +97,31 @@ public class Move : MonoBehaviour
     private void CheckCollisions()
     {
         _isGrounded = Physics2D.OverlapBox(_groundCheck.transform.position, _groundCheck.Size, 0f, _layerMask);
-        _isTouchingRight =
-            Physics2D.OverlapBox(_rightWallCheck.transform.position, _rightWallCheck.Size, 0f, _layerMask);
-        _isTouchingLeft = Physics2D.OverlapBox(_leftWallCheck.transform.position, _leftWallCheck.Size, 0f, _layerMask);
+        _isTouchingLeft = CastRayToDirection(Vector2.left);
+         _isTouchingRight = CastRayToDirection(Vector2.right);
         UpdateWallSliding();
     }
 
     private void UpdateWallSliding()
     {
-        if (_isWallSliding)
-        {
-            // start countdown 
-            StartCoroutine(CountDown());
-
-            // if we wall slide and want to move from wall - give time interval for wall jumping
-            if (!_hasBeenInvoked && (_isTouchingLeft && _horizontal > 0 || _isTouchingRight && _horizontal < 0))
-            {
-                _leftPrevious = _isTouchingLeft;
-                _rightPrevious = _isTouchingRight;
-                Invoke("ResetWallSliding", 0.3f);
-                _hasBeenInvoked = true;
-            }
-        }
+        // if (_isWallSliding)
+        // {
+        //     
+        //
+        //     // if we wall slide and want to move from wall - give time interval for wall jumping
+        //     if (!_hasBeenInvoked && (_isTouchingLeft && _horizontal > 0 || _isTouchingRight && _horizontal < 0))
+        //     {
+        //         Invoke("ResetWallSliding", 0.3f);
+        //         _hasBeenInvoked = true;
+        //     }
+        // }
 
         var hitLeft = CastRayToDirection(Vector2.left);
         var hitRight = CastRayToDirection(Vector2.right);
-        _isWallSliding = (hitLeft || hitRight) && !_isGrounded;
+        _isWallSliding = ((hitLeft || hitRight) &&  _isRightButtonPressed) && !_isGrounded;
     }
 
-    IEnumerator CountDown()
-    {
-        _timeWallUnstick = _timeWallStick;
-        while (_isWallSliding)
-        {
-            _timeWallUnstick -= Time.deltaTime;
-            if (_timeWallUnstick < 0)
-            {
-                _isWallSliding = false;
-            }
-
-            yield return null;
-        }
-    }
+   
 
     void ResetWallSliding()
     {
@@ -168,6 +151,13 @@ public class Move : MonoBehaviour
     }
     private void ApplyVelocity()
     {
+        if (_isWallSliding)
+        {
+            _rb.velocity = new Vector2(_xVelocity, _rb.velocity.y);
+            return;
+        }
+        
+        
         Vector3 horizontalMove = new Vector2(_xVelocity, _rb.velocity.y);
         horizontalMove.y = 0;
         horizontalMove.Normalize();
@@ -206,7 +196,7 @@ public class Move : MonoBehaviour
     private void WallSlide()
     {
       
-        if (_isWallSliding && _isRightButtonPressed)
+        if (_isWallSliding )
         {
             
             var newYVel = Mathf.Clamp(_rb.velocity.y, -_wallSlidingSpeed, float.MaxValue);
