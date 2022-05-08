@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Color: {r: 0.9098039, g: 0.5176471, b: 0.25490198, a: 1}
   m_Intensity: 1.1
   m_LightVolumeIntensity: 1
-  m_LightVolumeIntensityEnabled: 0
+  m_LightVolumeIntensityEnabled: 1
   m_ApplyToSortingLayers: 73f5127e00000000d7cbc1ac61e18a488ba822ca
   m_LightCookieSprite: {fileID: 0}
   m_DeprecatedPointLightCookieSprite: {fileID: 0}
@@ -61,8 +61,8 @@ MonoBehaviour:
   m_UseNormalMap: 0
   m_ShadowIntensityEnabled: 1
   m_ShadowIntensity: 1
-  m_ShadowVolumeIntensityEnabled: 0
-  m_ShadowVolumeIntensity: 0.75
+  m_ShadowVolumeIntensityEnabled: 1
+  m_ShadowVolumeIntensity: 1
   m_Vertices:
   - position: {x: 0.9985302, y: 0.9985302, z: 0}
     color: {r: 0.70710677, g: 0.70710677, b: 0, a: 0}
@@ -467,8 +467,8 @@ MonoBehaviour:
     m_Bits: 576
   _light2D: {fileID: 882493250}
   patrolRoute:
-  - {x: -5.17, y: 0, z: 0}
-  - {x: 20.35, y: 0, z: 0}
+  - {x: 2.7, y: 0, z: 0}
+  - {x: 16.57, y: 0, z: 0}
 --- !u!1 &6691069657001311992
 GameObject:
   m_ObjectHideFlags: 0
