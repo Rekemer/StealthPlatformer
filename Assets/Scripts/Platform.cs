@@ -44,7 +44,7 @@ public class Platform : MonoBehaviour
 
         int targetWayPointIndex = 1;
 
-        Vector3 targetWayPoint = waypoints[0];
+        Vector3 targetWayPoint = waypoints[targetWayPointIndex];
 
         
         while (true)

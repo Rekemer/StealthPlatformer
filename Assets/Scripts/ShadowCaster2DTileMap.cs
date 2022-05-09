@@ -1,7 +1,9 @@
 ﻿using System.Linq;
 using System.Reflection;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
+using UnityEngine.Tilemaps;
 
 
 [RequireComponent(typeof(CompositeCollider2D))]
@@ -61,4 +63,14 @@ public class ShadowCaster2DTileMap : MonoBehaviour
 
     }
 
+    // should not be here!
+    public void DestroyAllTiles()
+    {
+        var tileMap = GetComponent<Tilemap>();
+        if (tileMap != null)
+        {
+            Undo.RecordObject(tileMap, "Delete All tiles");
+            tileMap.ClearAllTiles();
+        }
+    }
 }

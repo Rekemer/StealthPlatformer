@@ -25,9 +25,12 @@ public class ShadowCastersGeneratorEditor : Editor
         EditorGUILayout.Space();
         if (GUILayout.Button("Destroy All Children"))
         {
-
             generator.DestroyAllChildren();
+        }
 
+        if (GUILayout.Button("Destroy All Tiles"))
+        {
+            generator.DestroyAllTiles();
         }
     }
 
