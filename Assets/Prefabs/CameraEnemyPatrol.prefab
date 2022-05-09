@@ -245,6 +245,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 576
   _light2D: {fileID: 48684849}
+  _waitTime: 0
+  _beep: {fileID: 4298223346457681091}
 --- !u!1 &4298223346034070324
 GameObject:
   m_ObjectHideFlags: 0
@@ -439,7 +441,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4298223346990767525}
   m_Layer: 10
-  m_Name: CameraEnemy
+  m_Name: CameraEnemyPatrol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

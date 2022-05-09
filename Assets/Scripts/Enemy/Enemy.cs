@@ -79,6 +79,11 @@ namespace Enemy
             GameManager.Instance.IsGameOver = true;
         }
 
+        public void Switch()
+        {
+            throw new NotImplementedException();
+        }
+
 
         IEnumerator PatrolRoutine(Vector3[] waypoints)
         {

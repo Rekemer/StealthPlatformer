@@ -7,7 +7,11 @@ namespace Enemy
 {
     public class EnemyCamera : EnemyBase, IEnemy
     {
-        
+        [SerializeField] private float _waitTime;
+        [SerializeField] private Beep _beep;
+        [SerializeField] private AIType _aiType;
+        private bool _isTurnedOff;
+        private bool _isSwitched;
         private void Awake()
         {
             playerPos = FindObjectOfType<Move>().transform;
@@ -15,13 +19,24 @@ namespace Enemy
 
         private void Start()
         {
-            var patrol = new Patrol(this);
-            var attack = new Attack(this);
-            InitTransition(patrol, attack, CanSeePlayer);
-            stateMachine.SetState(patrol);
+            if (_aiType == AIType.Patrol)
+            {
+                var patrol = new Patrol(this);
+                var attack = new Attack(this);
+                InitTransition(patrol, attack, CanSeePlayer);
+                stateMachine.SetState(patrol);
+            }
+            else if (_aiType == AIType.Switch)
+            {
+                var swit = new Switch(this); 
+                var attack = new Attack(this);
+                Func<bool> HasTarget() => () => CanSeePlayer() && !_isTurnedOff;
+                InitTransition(swit, attack, HasTarget());
+                stateMachine.SetState(swit);
+            }
             SetAngleOfLight();
         }
-
+        
         private void OnValidate()
         {
             SetAngleOfLight();
@@ -61,6 +76,29 @@ namespace Enemy
             GameManager.Instance.IsGameOver = true;
         }
 
+        public void Switch()
+        {
+            if (!_isSwitched)
+            {
+                StartCoroutine(SwitchRoutine());
+                Debug.Log("Switch");
+            }
+           
+        }
+
+        private IEnumerator SwitchRoutine()
+        {
+            _isSwitched = true;
+            _beep.IsTurnedOff = _isTurnedOff = true;
+            _light2D.enabled = false;
+            yield return new WaitForSeconds(_waitTime);
+            _light2D.enabled = true;
+            _beep.IsTurnedOff = false;
+            _isTurnedOff = false;
+            yield return new WaitForSeconds(_waitTime);
+            _isSwitched = false;
+            
+        }
 
         void Update()
         {

@@ -5,6 +5,8 @@
         {
             void Patrol();
             void Attack();
-     
+
+            void Switch();
+
         }
     }

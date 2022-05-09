@@ -9,11 +9,14 @@ public class Beep : MonoBehaviour
     public Color targetColor = Color.red;
     public Color defaultColor = Color.black;
     [SerializeField] private LerpClass.InterType _interType;
+
+    public bool IsTurnedOff { get; set; }
     // Start is called before the first frame update
     void Start()
     {
         _spriteRenderer = GetComponent<SpriteRenderer>();
-        InvokeRepeating("Flashing",0f,timeInterval);
+        StartCoroutine(Flash());
+        // InvokeRepeating("Flashing",0f,timeInterval);
     }
 
     // Update is called once per frame
@@ -21,6 +24,29 @@ public class Beep : MonoBehaviour
     {
     }
 
+    IEnumerator Flash()
+    {
+        float timer = 0;
+        while (true)
+        {
+            if (!IsTurnedOff)
+            {
+                timer += Time.deltaTime;
+                if (timer >= timeInterval)
+                {
+                    Flashing();
+                    timer = 0;
+                }
+            }
+            else
+            {
+                _spriteRenderer.color = defaultColor;
+            }
+      
+            yield return null;
+        }
+        
+    }
     void Flashing()
     {
         Color currentColor = _spriteRenderer.color;

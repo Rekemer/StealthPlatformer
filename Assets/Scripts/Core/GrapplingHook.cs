@@ -126,11 +126,16 @@ public class GrapplingHook : MonoBehaviour
 
     public IEnumerator StartCooldown()
     {
-        _isHookAvailable = false;
+        ResetHook(false);
         yield return new WaitForSeconds(_coolDown);
-        _isHookAvailable = true;
+        ResetHook(true);
     }
 
+    public void ResetHook(bool state)
+    {
+        _isHookAvailable = state;
+    }
+    
     private void Hook()
     {
         _ropeAnchor.gameObject.SetActive(true);
@@ -184,6 +189,7 @@ public class GrapplingHook : MonoBehaviour
     {
         if (colliderOnExit.gameObject.CompareTag("Anchor"))
         {
+            
         }
     }
 }
