@@ -19,11 +19,12 @@ namespace Enemy
 
         private void Start()
         {
+            base.Start();
             if (_aiType == AIType.Patrol)
             {
                 var patrol = new Patrol(this);
                 var attack = new Attack(this);
-                InitTransition(patrol, attack, CanSeePlayer);
+               // InitTransition(patrol, attack, CanSeePlayer);
                 stateMachine.SetState(patrol);
             }
             else if (_aiType == AIType.Switch)
@@ -90,9 +91,11 @@ namespace Enemy
         {
             _isSwitched = true;
             _beep.IsTurnedOff = _isTurnedOff = true;
-            _light2D.enabled = false;
+            IsViewOn = false;
+           // _light2D.enabled = false;
             yield return new WaitForSeconds(_waitTime);
-            _light2D.enabled = true;
+            //_light2D.enabled = true;
+            IsViewOn = true;
             _beep.IsTurnedOff = false;
             _isTurnedOff = false;
             yield return new WaitForSeconds(_waitTime);
@@ -100,10 +103,7 @@ namespace Enemy
             
         }
 
-        void Update()
-        {
-            stateMachine.Tick();
-        }
+        
     
 
       

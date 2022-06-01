@@ -20,6 +20,7 @@ namespace Enemy
 
         void Start()
         {
+            base.Start();
             globalPatrolRoute = new Vector3[patrolRoute.Length];
             for (int i = 0; i < globalPatrolRoute.Length; i++)
             {
@@ -33,10 +34,7 @@ namespace Enemy
         }
 
         // Update is called once per frame
-        void Update()
-        {
-            stateMachine.Tick();
-        }
+      
 
         private void OnDrawGizmos()
         {
@@ -117,7 +115,8 @@ namespace Enemy
             var direction = (whereToTurn - transform.position).normalized;
             float dot = Vector2.Dot(transform.right, direction);
             float yAngle = dot > 0 ? 0 : 180;
-            transform.Rotate(Vector3.up, yAngle);
+            transform.Rotate(Vector3.up, yAngle); 
+            //viewAngleInDegrees += 180;
         }
     }
 }
