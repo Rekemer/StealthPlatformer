@@ -20,7 +20,6 @@ namespace Enemy
 
         void Start()
         {
-            base.Start();
             globalPatrolRoute = new Vector3[patrolRoute.Length];
             for (int i = 0; i < globalPatrolRoute.Length; i++)
             {
@@ -38,16 +37,15 @@ namespace Enemy
 
         private void OnDrawGizmos()
         {
-            if (patrolRoute.Length == 0) return;
-            for (int i = 0; i < patrolRoute.Length; i++)
-            {
-                Gizmos.color = Color.red;
-                Vector3 newPos = Application.isPlaying ? globalPatrolRoute[i] : transform.position + patrolRoute[i];
-                Gizmos.DrawLine(newPos - Vector3.left, newPos + Vector3.left);
-                Gizmos.DrawLine(newPos - Vector3.up, newPos + Vector3.up);
-            }
-
-            DrawAngle();
+            // if (patrolRoute.Length == 0) return;
+            // for (int i = 0; i < patrolRoute.Length; i++)
+            // {
+            //     Gizmos.color = Color.red;
+            //     Vector3 newPos = Application.isPlaying ? globalPatrolRoute[i] : transform.position + patrolRoute[i];
+            //     Gizmos.DrawLine(newPos - Vector3.left, newPos + Vector3.left);
+            //     Gizmos.DrawLine(newPos - Vector3.up, newPos + Vector3.up);
+            // }
+            
         }
 
         private void OnValidate()

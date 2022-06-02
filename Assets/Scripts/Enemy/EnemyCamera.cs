@@ -19,7 +19,7 @@ namespace Enemy
 
         private void Start()
         {
-            base.Start();
+          
             if (_aiType == AIType.Patrol)
             {
                 var patrol = new Patrol(this);
@@ -65,11 +65,7 @@ namespace Enemy
                 yield return null;
             }
         }
-        private void OnDrawGizmos()
-        {
-            DrawAngle();
-        }
-
+       
         
 
         public void Attack()
@@ -92,11 +88,11 @@ namespace Enemy
         {
             _isSwitched = true;
             _beep.IsTurnedOff = _isTurnedOff = true;
-            IsViewOn = false;
+            GetComponent<MeshVisualisation>().IsViewOn = false;
            // _light2D.enabled = false;
             yield return new WaitForSeconds(_waitTime);
             //_light2D.enabled = true;
-            IsViewOn = true;
+            GetComponent<MeshVisualisation>().IsViewOn = true;
             _beep.IsTurnedOff = false;
             _isTurnedOff = false;
             yield return new WaitForSeconds(_waitTime);
