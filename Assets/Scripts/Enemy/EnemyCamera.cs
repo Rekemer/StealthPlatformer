@@ -52,14 +52,15 @@ namespace Enemy
 
         IEnumerator PatrolRoutine()
         {
-            float t = Mathf.InverseLerp( -viewAngleInDegrees / 2, viewAngleInDegrees / 2, transform.eulerAngles.z);
+            var initAngle = transform.eulerAngles.z;
+            float t = Mathf.InverseLerp( initAngle-viewAngleInDegrees / 2, initAngle+ viewAngleInDegrees / 2, transform.eulerAngles.z);
             float func;
             float angle;
             while (stateMachine.GetCurrentState() is Patrol)
             {
                 t += Time.deltaTime;
                 func = Mathf.Cos(t * speed) + 1;
-                angle = Mathf.LerpAngle( -viewAngleInDegrees / 2, viewAngleInDegrees / 2, func/2f);
+                angle = Mathf.LerpAngle( initAngle-viewAngleInDegrees / 2, initAngle+viewAngleInDegrees / 2, func/2f);
                 transform.localEulerAngles = new Vector3(0f, 0f, angle );
                 yield return null;
             }

@@ -114,14 +114,23 @@ namespace Enemy
 
         private void DrawFieldOfView()
         {
+            float leftAngleInRadians = -viewAngleInDegrees / 2 * Mathf.Deg2Rad;
+            float rightAngleInRadians = viewAngleInDegrees / 2 * Mathf.Deg2Rad;
+           
             var stepCount = Mathf.RoundToInt(viewAngleInDegrees * meshResolution);
             float stepAngleSize = viewAngleInDegrees / stepCount;
             List<Vector2> hitPoints = new List<Vector2>();
             ViewCastInfo oldInfoHit = new ViewCastInfo();
 
+            
+            
+           
+            
             for (int i = 0; i < stepCount; i++)
             {
-                float angle = transform.eulerAngles.z - viewAngleInDegrees / 2 + stepAngleSize * i;
+                float angle = transform.eulerAngles.z  - viewAngleInDegrees / 2 + stepAngleSize * i;
+                // angle = Mathf.Clamp(angle, transform.eulerAngles.z - viewAngleInDegrees / 2,
+                //     transform.eulerAngles.z + viewAngleInDegrees / 2);
                 angle *= Mathf.Deg2Rad;
                 // var vector = (Vector3) GetVectorFromAngle(angle);
                 var infoHit = GetHit(angle);
