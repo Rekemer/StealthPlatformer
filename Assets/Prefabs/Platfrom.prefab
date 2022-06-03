@@ -81,7 +81,6 @@ GameObject:
   - component: {fileID: 2291367562186669230}
   - component: {fileID: 2291367562186669231}
   - component: {fileID: 2291367562186669228}
-  - component: {fileID: 2291367562186669229}
   m_Layer: 6
   m_Name: Platfrom
   m_TagString: Untagged
@@ -96,7 +95,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2291367562186669226}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.71, y: 4.83, z: 0}
   m_LocalScale: {x: 4.099696, y: 0.99904, z: 1}
   m_Children:
@@ -173,32 +172,6 @@ MonoBehaviour:
   patrolRoute:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 4, z: 0}
---- !u!114 &2291367562186669229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2291367562186669226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShadowGroup: 0
-  m_HasRenderer: 1
-  m_UseRendererSilhouette: 1
-  m_CastsShadows: 1
-  m_SelfShadows: 0
-  m_ApplyToSortingLayers: 73f5127e00000000d7cbc1ac61e18a488ba822ca
-  m_ShapePath:
-  - {x: -0.49999976, y: -0.5, z: 0}
-  - {x: -0.49999976, y: 0.5, z: 0}
-  - {x: 0.5000001, y: 0.49999967, z: 0}
-  - {x: 0.5000001, y: -0.47739053, z: 0}
-  m_ShapePathHash: 1377623425
-  m_Mesh: {fileID: 0}
-  m_InstanceId: -265890
 --- !u!1 &2291367562819738736
 GameObject:
   m_ObjectHideFlags: 0
