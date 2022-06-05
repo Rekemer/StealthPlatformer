@@ -1,23 +1,18 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : Singletone<GameManager>
+public class LoadManager : Singletone<LoadManager>
 {
-    public bool IsGameWon { get; set; }
-    public bool IsGameOver { get; set; }
-    private float timeLeft;
-
-    void Start()
+    public override void Awake()
     {
-       
+        base.Awake();
     }
 
     
-  
-   
 
     public void ReloadScene()
     {
@@ -31,6 +26,12 @@ public class GameManager : Singletone<GameManager>
             SceneManager.LoadScene(levelName);
         }
     }
+
+    private void LoadHUD()
+    {
+        SceneManager.LoadScene("HUD", LoadSceneMode.Additive);
+    }
+    
 
     public void LoadLevel(int levelIndex)
     {

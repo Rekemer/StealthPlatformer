@@ -37,7 +37,6 @@ public class Timer : MonoBehaviour
         while (clock.fillAmount < 1)
         {
             t += Time.deltaTime;
-            Debug.Log(t/cooldownTime);
             clock.fillAmount = t/cooldownTime;
             yield return null;
         }
