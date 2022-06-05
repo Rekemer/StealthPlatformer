@@ -29,14 +29,7 @@ namespace Enemy
         private void Update()
         {
             stateMachine.Tick();
-            
         }
-
-        
-
-        
-
-       
 
         protected bool CanSeePlayer()
         {

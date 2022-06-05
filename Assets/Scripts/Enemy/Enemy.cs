@@ -48,7 +48,7 @@ namespace Enemy
         public void Attack()
         {
             Debug.Log("ENEMY WALKING: gotcha! ");
-            GameManager.Instance.IsGameOver = true;
+            EventSystem.current.OnSpotted();
         }
 
         public void Switch()

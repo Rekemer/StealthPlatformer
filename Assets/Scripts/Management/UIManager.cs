@@ -8,6 +8,8 @@ public class UIManager : Singletone<UIManager>
     [SerializeField] private GameObject endGameLoseScreen;
     void Start()
     {
+        EventSystem.current.OnGettingSpotted += ShowLoseScreen;
+        EventSystem.current.OnGettingToFinish += ShowWinScreen;
         endGameWinScreen.SetActive(false);
         endGameLoseScreen.SetActive(false);
     }

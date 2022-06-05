@@ -12,21 +12,10 @@ public class GameManager : Singletone<GameManager>
 
     void Start()
     {
-     
-        
+       
     }
 
-    void Update()
-    {
-        if (IsGameOver)
-        {
-            UIManager.Instance.ShowLoseScreen();
-        }
-        else if (IsGameWon)
-        {
-            UIManager.Instance.ShowWinScreen();
-        }
-    }
+    
   
    
 

@@ -16,7 +16,7 @@ public class Finish : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            GameManager.Instance.IsGameWon = true;
+            EventSystem.current.OnFinish();
         }
     }
 

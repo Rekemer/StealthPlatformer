@@ -299,9 +299,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   zones:
-  - {fileID: 1558805247}
-  - {fileID: 813365651}
   - {fileID: 2126629338}
+  - {fileID: 813365651}
+  - {fileID: 1558805247}
 --- !u!1 &141645947
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,11 +764,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8744929518600042087, guid: 1988e2c94e235c74790197640c5865e9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.8
+      value: 32.5
       objectReference: {fileID: 0}
     - target: {fileID: 8744929518600042087, guid: 1988e2c94e235c74790197640c5865e9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.2
+      value: 16.8
       objectReference: {fileID: 0}
     - target: {fileID: 8744929518600042087, guid: 1988e2c94e235c74790197640c5865e9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1641,10 +1641,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 27
+    m_FontSize: 26
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 0
     m_MaxSize: 82
     m_Alignment: 1
     m_AlignByGeometry: 0
@@ -9632,11 +9632,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5358928910534228566, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.8
+      value: 32.5
       objectReference: {fileID: 0}
     - target: {fileID: 5358928910534228566, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.2
+      value: 16.8
       objectReference: {fileID: 0}
     - target: {fileID: 5358928910534228566, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}
       propertyPath: m_LocalPosition.z
