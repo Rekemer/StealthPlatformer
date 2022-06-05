@@ -97,8 +97,8 @@ MonoBehaviour:
     m_Extent: {x: 0.9985302, y: 0.99853027, z: 0}
   m_PointLightInnerAngle: 122.35
   m_PointLightOuterAngle: 122.35
-  m_PointLightInnerRadius: 22.2
-  m_PointLightOuterRadius: 22.300001
+  m_PointLightInnerRadius: 13.06
+  m_PointLightOuterRadius: 13.160001
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
@@ -483,6 +483,7 @@ GameObject:
   - component: {fileID: 6691069656670453726}
   - component: {fileID: 2096520958}
   - component: {fileID: 2096520957}
+  - component: {fileID: 276199717}
   m_Layer: 10
   m_Name: Enemy
   m_TagString: Untagged
@@ -543,23 +544,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  viewDistance: 22.2
-  viewAngleInDegrees: 122.35
-  obstacleMask:
-    serializedVersion: 2
-    m_Bits: 64
-  visibleTargetMask:
-    serializedVersion: 2
-    m_Bits: 256
-  _light2D: {fileID: 882493250}
-  meshResolution: 1
-  edgeResolveIterations: 10
-  visibleTargets: []
-  viewMeshFilter: {fileID: 2064176194}
-  edgeDstThreshold: 1.97
   patrolRoute:
-  - {x: -0.7, y: 0, z: 0}
-  - {x: 9.69, y: 0, z: 0}
+  - {x: -4.29, y: 0, z: 0}
+  - {x: 4.72, y: 0, z: 0}
+--- !u!114 &276199717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6691069656670453727}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c6e30bb3e3ce684590ddf0079f4906f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _visualisationData: {fileID: 11400000, guid: 8a7d55e349e658542b5ceefb6fb6bf52, type: 2}
+  viewMeshFilter: {fileID: 2064176194}
+  edgeDstThreshold: 1.5
 --- !u!1 &6691069657001311992
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,7 +15,8 @@ namespace Enemy
 
         private void Awake()
         {
-            playerPos = FindObjectOfType<Move>().transform;
+            base.Awake();
+            playerPos = FindObjectOfType<PlayerMove>().transform;
         }
 
         void Start()
@@ -32,37 +33,12 @@ namespace Enemy
             stateMachine.SetState(patrol);
         }
 
-        // Update is called once per frame
-      
-
-        private void OnDrawGizmos()
-        {
-            // if (patrolRoute.Length == 0) return;
-            // for (int i = 0; i < patrolRoute.Length; i++)
-            // {
-            //     Gizmos.color = Color.red;
-            //     Vector3 newPos = Application.isPlaying ? globalPatrolRoute[i] : transform.position + patrolRoute[i];
-            //     Gizmos.DrawLine(newPos - Vector3.left, newPos + Vector3.left);
-            //     Gizmos.DrawLine(newPos - Vector3.up, newPos + Vector3.up);
-            // }
-            
-        }
-
+    
         private void OnValidate()
         {
             SetAngleOfLight();
         }
         
-        void SetAngleOfLight()
-        {
-            if (_light2D != null)
-            {
-                _light2D.pointLightOuterAngle = viewAngleInDegrees;
-                _light2D.pointLightInnerAngle = viewAngleInDegrees;
-                _light2D.pointLightOuterRadius = viewDistance + 0.1f;
-                _light2D.pointLightInnerRadius = viewDistance;
-            }
-        }
         
         public void Patrol()
         {

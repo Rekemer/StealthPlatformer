@@ -14,7 +14,8 @@ namespace Enemy
         private bool _isSwitched;
         private void Awake()
         {
-            playerPos = FindObjectOfType<Move>().transform;
+            base.Awake();
+            playerPos = FindObjectOfType<PlayerMove>().transform;
         }
 
         private void Start()
@@ -24,7 +25,7 @@ namespace Enemy
             {
                 var patrol = new Patrol(this);
                 var attack = new Attack(this);
-               // InitTransition(patrol, attack, CanSeePlayer);
+                InitTransition(patrol, attack, CanSeePlayer);
                 stateMachine.SetState(patrol);
             }
             else if (_aiType == AIType.Switch)
@@ -53,7 +54,8 @@ namespace Enemy
         IEnumerator PatrolRoutine()
         {
             var initAngle = transform.eulerAngles.z;
-            float t = Mathf.InverseLerp( initAngle-viewAngleInDegrees / 2, initAngle+ viewAngleInDegrees / 2, transform.eulerAngles.z);
+            float viewAngleInDegrees =_meshVisualisation.ViewAngleInDegrees;
+            float t = Mathf.InverseLerp( initAngle-  viewAngleInDegrees / 2, initAngle+ viewAngleInDegrees / 2, transform.eulerAngles.z);
             float func;
             float angle;
             while (stateMachine.GetCurrentState() is Patrol)

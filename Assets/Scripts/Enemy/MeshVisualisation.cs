@@ -6,11 +6,27 @@ using UnityEngine;
 public class MeshVisualisation : MonoBehaviour
 {
     [SerializeField] private VisualisationData _visualisationData;
-    public List<Transform> visibleTargets = new List<Transform>();
+   // public List<Transform> visibleTargets = new List<Transform>();
     public MeshFilter viewMeshFilter;
     Mesh viewMesh;
     protected bool _isViewOn = true;
 
+    public float ViewDistance
+    {
+        get => _visualisationData.viewDistance;
+    }
+    public float ViewAngleInDegrees
+    {
+        get => _visualisationData.viewAngleInDegrees;
+    }
+    public int VisibleTargetMask
+    {
+        get => _visualisationData.visibleTargetMask;
+    }
+    public int ObstacleMask
+    {
+        get => _visualisationData.obstacleMask;
+    }
     
     private void OnDrawGizmos()
     {
@@ -62,7 +78,7 @@ public class MeshVisualisation : MonoBehaviour
     
     private void FindVisibleTargets()
     {
-        visibleTargets.Clear();
+        //visibleTargets.Clear();
         Collider2D[] targetsInViewRadius =
             Physics2D.OverlapCircleAll(transform.position, _visualisationData.viewDistance, _visualisationData.visibleTargetMask);
 
@@ -76,7 +92,7 @@ public class MeshVisualisation : MonoBehaviour
 
                 if (!Physics2D.Raycast(transform.position, dirToTarget, dstToTarget, _visualisationData.obstacleMask))
                 {
-                    visibleTargets.Add(target);
+                 //   visibleTargets.Add(target);
                 }
             }
         }

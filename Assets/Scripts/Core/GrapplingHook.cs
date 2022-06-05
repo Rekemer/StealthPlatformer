@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Core;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class GrapplingHook : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class GrapplingHook : MonoBehaviour
     [SerializeField] private float _ropeMaxCastDistance;
     [SerializeField] private RopeAnchor _ropeAnchor;
     [SerializeField] private float _coolDown;
+    
     private bool _isHookAvailable = true;
     private bool _isRopeAttached;
     private Vector2 _hitPos;
@@ -20,7 +22,7 @@ public class GrapplingHook : MonoBehaviour
     public Transform crosshair;
     public LineRenderer ropeRenderer;
     public LayerMask ropeLayerMask;
-
+    public float CooldownTime => _coolDown;
 
     // Start is called before the first frame update
     void Start()
@@ -98,7 +100,7 @@ public class GrapplingHook : MonoBehaviour
                 ropeRenderer.SetPosition(0, transform.position);
                 ropeRenderer.SetPosition(1, _hitPos);
                 _isRopeAttached = true;
-                StartCoroutine(StartCooldown());
+               
                 // start hooking
                 Hook();
             }
@@ -127,12 +129,14 @@ public class GrapplingHook : MonoBehaviour
     public IEnumerator StartCooldown()
     {
         ResetHook(false);
+        // start to fill timer (call method)
         yield return new WaitForSeconds(_coolDown);
         ResetHook(true);
     }
 
     public void ResetHook(bool state)
-    {
+    { 
+        // reset timer
         _isHookAvailable = state;
     }
     
@@ -145,7 +149,7 @@ public class GrapplingHook : MonoBehaviour
     IEnumerator HookRoutine()
     {
         float t = 0f;
-        GetComponent<Move>().enabled = false;
+        GetComponent<PlayerMove>().enabled = false;
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         float curSpeed = 0f;
         while (_isRopeAttached)
@@ -164,8 +168,11 @@ public class GrapplingHook : MonoBehaviour
     {
         _ropeAnchor.gameObject.SetActive(false);
         _hitPos = transform.position;
-        GetComponent<Move>().enabled = true;
+        GetComponent<PlayerMove>().enabled = true;
         ResetRope();
+        StartCoroutine(StartCooldown());
+        EventSystem.current.OnGrapplingHookDeactivation(_coolDown);
+
     }
 
     private void ResetRope()

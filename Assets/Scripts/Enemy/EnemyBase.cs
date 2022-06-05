@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.PlayerLoop;
@@ -10,27 +11,19 @@ namespace Enemy
     public abstract class EnemyBase : MonoBehaviour
     {
         [SerializeField] protected float speed;
-        [SerializeField] protected float viewDistance = 4;
-        [SerializeField] protected float viewAngleInDegrees;
-        [SerializeField] protected LayerMask obstacleMask;
-        [SerializeField] protected LayerMask visibleTargetMask;
-        [SerializeField] protected Light2D _light2D;
-       
+        protected MeshVisualisation _meshVisualisation;
         protected Transform playerPos;
         protected StateMachine stateMachine = new StateMachine();
-        
-        
-        
+
+        protected void Awake()
+        {
+            _meshVisualisation = GetComponent<MeshVisualisation>();
+        }
+
 
         protected void SetAngleOfLight()
         {
-            if (_light2D != null)
-            {
-                _light2D.pointLightOuterAngle = viewAngleInDegrees;
-                _light2D.pointLightInnerAngle = viewAngleInDegrees;
-                _light2D.pointLightOuterRadius = viewDistance + 0.5f;
-                _light2D.pointLightInnerRadius = viewDistance;
-            }
+           
         }
 
         private void Update()
@@ -47,13 +40,16 @@ namespace Enemy
 
         protected bool CanSeePlayer()
         {
-            if ((transform.position - playerPos.position).sqrMagnitude < Mathf.Pow(viewDistance, 2))
+            if ((transform.position - playerPos.position).sqrMagnitude < Mathf.Pow(_meshVisualisation.ViewDistance, 2))
             {
                 Vector2 dirToPlayer = (playerPos.position - transform.position).normalized;
                 float angle = Vector3.Angle(transform.right, dirToPlayer);
-                if (angle < viewAngleInDegrees / 2f)
+                if (angle < _meshVisualisation.ViewAngleInDegrees / 2f)
                 {
-                    if (!Physics2D.Linecast(transform.position, playerPos.position, visibleTargetMask))
+                    RaycastHit2D hit2D = Physics2D.Linecast(transform.position, playerPos.position,
+                        _meshVisualisation.ObstacleMask);
+                    bool isPlayer = hit2D.transform.GetComponent<PlayerMove>();
+                    if (isPlayer )
                     {
                         if (!EventSystem.isPlayerHiding)
                         {

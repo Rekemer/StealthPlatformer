@@ -12,6 +12,7 @@ public class GrapplingHookBonus : MonoBehaviour
             var hook = other.GetComponent<GrapplingHook>();
             if (hook != null)
             {
+                EventSystem.current.ActivateBonus();
                 hook.ResetHook(true);
             }
         }

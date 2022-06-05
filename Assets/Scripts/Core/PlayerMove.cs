@@ -7,7 +7,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(BetterJump))]
-public class Move : MonoBehaviour
+public class PlayerMove : MonoBehaviour
 {
     [SerializeField] private float _speed;
 

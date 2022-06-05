@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51ddc8944e86cec41a0a5fe3cf31135d, type: 3}
   m_Name: EnemyCameraMeshVisualisaton
   m_EditorClassIdentifier: 
-  viewDistance: 22
+  viewDistance: 19.7
   viewAngleInDegrees: 120
   obstacleMask:
     serializedVersion: 2
