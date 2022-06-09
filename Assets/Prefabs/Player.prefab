@@ -320,7 +320,7 @@ MonoBehaviour:
   _jumpHeight: 4
   _timeToJumpApex: 0.4
   _wallSlidingSpeed: 0.4
-  _timeWallStick: 10
+  _timeWallStick: 3
 --- !u!114 &5358928910534228569
 MonoBehaviour:
   m_ObjectHideFlags: 0

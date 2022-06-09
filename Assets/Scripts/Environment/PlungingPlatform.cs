@@ -8,6 +8,7 @@ namespace Environment
         [SerializeField] private LerpClass.InterType InterTypeToPlunge;
         [SerializeField] private LerpClass.InterType InterTypeToGoBack;
         [SerializeField] private float timeToWaitAfterPlunging;
+        [SerializeField] private float timeToWaitBeforePlunging;
         private bool IsActivated;
        
         private void OnTriggerEnter2D(Collider2D other)
@@ -42,6 +43,7 @@ namespace Environment
 
         private IEnumerator PlungingRoutine()
         {
+            yield return new WaitForSeconds(timeToWaitBeforePlunging);
             IsActivated = true;
             // start plunging
             float elapsedTime = 0;

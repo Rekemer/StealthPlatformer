@@ -92,5 +92,18 @@ namespace Enemy
             transform.Rotate(Vector3.up, yAngle); 
             //viewAngleInDegrees += 180;
         }
+        private void OnDrawGizmos()
+        {
+            if (patrolRoute.Length == 0) return;
+            for (int i = 0; i < patrolRoute.Length; i++)
+            {
+                Gizmos.color = Color.red;
+                Vector3 newPos = Application.isPlaying ? globalPatrolRoute[i] : transform.position + patrolRoute[i];
+                Gizmos.DrawLine(newPos - Vector3.left, newPos + Vector3.left);
+                Gizmos.DrawLine(newPos - Vector3.up, newPos + Vector3.up);
+            }
+            
+        }
+
     }
 }

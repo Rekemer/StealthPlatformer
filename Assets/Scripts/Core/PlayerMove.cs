@@ -22,8 +22,10 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float _timeToJumpApex = .4f;
     [SerializeField] private float _wallSlidingSpeed = .4f;
     [SerializeField] private float _timeWallStick;
+    [SerializeField] private float _wallJumpVelocity;
     private float _timeWallUnstick;
     private float _jumpVelocity;
+    
 
     private float
         _timeToRemember = .2f; // time interval when jump button is pressed - to be able to jump before being grounded
@@ -104,18 +106,10 @@ public class PlayerMove : MonoBehaviour
 
     private void UpdateWallSliding()
     {
-        // if (_isWallSliding)
-        // {
-        //     
-        //
-        //     // if we wall slide and want to move from wall - give time interval for wall jumping
-        //     if (!_hasBeenInvoked && (_isTouchingLeft && _horizontal > 0 || _isTouchingRight && _horizontal < 0))
-        //     {
-        //         Invoke("ResetWallSliding", 0.3f);
-        //         _hasBeenInvoked = true;
-        //     }
-        // }
-
+        if (_isWallSliding)
+        {
+            StartCoroutine(CountDown());
+        }
         var hitLeft = CastRayToDirection(Vector2.left);
         var hitRight = CastRayToDirection(Vector2.right);
         _isWallSliding = ((hitLeft || hitRight) &&  _isRightButtonPressed) && !_isGrounded;
@@ -141,7 +135,20 @@ public class PlayerMove : MonoBehaviour
 
         WallSlide();
     }
+    IEnumerator CountDown()
+    {
+        _timeWallUnstick = _timeWallStick;
+        while (_isWallSliding)
+        {
+            _timeWallUnstick -= Time.deltaTime;
+            if (_timeWallUnstick < 0)
+            {
+                _isWallSliding = false;
+            }
 
+            yield return null;
+        }
+    }
     bool CastRayToDirection(Vector2 direction)
     {
         direction.y = 0;
@@ -184,7 +191,7 @@ public class PlayerMove : MonoBehaviour
             {
                 
                 Debug.Log("jmp");
-                _rb.velocity = new Vector2(_xVelocity, _jumpVelocity);
+                _rb.velocity = new Vector2(_xVelocity, _wallJumpVelocity);
                 // _CanSecondJump = true;
             }
         }
