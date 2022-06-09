@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class GrapplingHookBonus : MonoBehaviour
 {
+    [SerializeField]
+    private ParticleSystem vfx;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
@@ -14,6 +16,7 @@ public class GrapplingHookBonus : MonoBehaviour
             {
                 EventSystem.current.ActivateBonus();
                 hook.GotBonus = true;
+                vfx.Play();
             }
         }
     }
