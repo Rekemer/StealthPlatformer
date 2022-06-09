@@ -138,7 +138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &35097703
 Transform:
   m_ObjectHideFlags: 0
@@ -405,7 +405,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8744929518600042087, guid: 1988e2c94e235c74790197640c5865e9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -30.2
+      value: 5.299999
       objectReference: {fileID: 0}
     - target: {fileID: 8744929518600042087, guid: 1988e2c94e235c74790197640c5865e9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8442,7 +8442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1187617273383794498, guid: 556ff22509b0b9f418f93300ebd095b8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15.466061
+      value: 14.216061
       objectReference: {fileID: 0}
     - target: {fileID: 1187617273383794498, guid: 556ff22509b0b9f418f93300ebd095b8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8625,7 +8625,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5358928910534228566, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -30.2
+      value: 5.299999
       objectReference: {fileID: 0}
     - target: {fileID: 5358928910534228566, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}
       propertyPath: m_LocalPosition.y
@@ -8662,10 +8662,6 @@ PrefabInstance:
     - target: {fileID: 5358928910534228566, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5358928910534228570, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}
-      propertyPath: _wallJumpVelocity
-      value: 25
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af5c08fbf66838d42bad25c0be821c41, type: 3}

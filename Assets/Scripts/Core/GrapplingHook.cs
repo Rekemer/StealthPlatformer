@@ -24,6 +24,48 @@ public class GrapplingHook : MonoBehaviour
     public LayerMask ropeLayerMask;
     public float CooldownTime => _coolDown;
 
+    private bool _gotBonus;
+    public bool GotBonus
+    {
+        get
+        {
+            return _gotBonus;
+        }
+        set
+        {
+            _gotBonus = true;
+            if (_isHookAvailable == false)
+            {
+                // just apply bonus
+                EventSystem.current.ActivateBonus();
+                ResetHook(true);
+                _gotBonus = false;
+            }
+            else
+            {
+                // unhook once bonus is got
+               Unhook();
+               EventSystem.current.ActivateBonus();
+               ResetHook(true);
+               
+               // have hook to spare once bonus is got
+               //StartCoroutine(WaitingForEndOfHooking());
+            }
+        }
+        
+    }
+
+    IEnumerator WaitingForEndOfHooking()
+    {
+        while (!_isHookAvailable)
+        {
+                ResetHook(true);
+                EventSystem.current.ActivateBonus();
+                _gotBonus = false;
+                yield return null;
+        }
+        
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -128,13 +170,24 @@ public class GrapplingHook : MonoBehaviour
 
     public IEnumerator StartCooldown()
     {
+        if (_gotBonus == false)
         ResetHook(false);
         // start to fill timer (call method)
-        yield return new WaitForSeconds(_coolDown);
+        yield return CooldownRoutine(_coolDown);
         ResetHook(true);
     }
 
-    public void ResetHook(bool state)
+    IEnumerator CooldownRoutine(float coolDown)
+    {
+        float time = 0f;
+        while (time <=coolDown && !_isHookAvailable)
+        {
+            time += Time.deltaTime;
+            Debug.Log(time);
+            yield return null;
+        }
+    }
+    private void ResetHook(bool state)
     { 
         // reset timer
         _isHookAvailable = state;

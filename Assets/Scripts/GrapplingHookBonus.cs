@@ -13,7 +13,7 @@ public class GrapplingHookBonus : MonoBehaviour
             if (hook != null)
             {
                 EventSystem.current.ActivateBonus();
-                hook.ResetHook(true);
+                hook.GotBonus = true;
             }
         }
     }

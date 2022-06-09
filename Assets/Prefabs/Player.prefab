@@ -45,8 +45,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   zones:
   - {fileID: 5358928910696119227}
-  - {fileID: 5358928911200962718}
   - {fileID: 5358928911929953266}
+  - {fileID: 5358928911200962718}
 --- !u!1 &760670233
 GameObject:
   m_ObjectHideFlags: 0
@@ -321,6 +321,7 @@ MonoBehaviour:
   _timeToJumpApex: 0.4
   _wallSlidingSpeed: 0.4
   _timeWallStick: 3
+  _wallJumpVelocity: 25
 --- !u!114 &5358928910534228569
 MonoBehaviour:
   m_ObjectHideFlags: 0
