@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Core;
+using Environment;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -25,7 +27,7 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] private float _wallJumpVelocity;
     private float _timeWallUnstick;
     private float _jumpVelocity;
-    
+
 
     private float
         _timeToRemember = .2f; // time interval when jump button is pressed - to be able to jump before being grounded
@@ -49,6 +51,7 @@ public class PlayerMove : MonoBehaviour
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
+       
     }
 
 
@@ -98,6 +101,7 @@ public class PlayerMove : MonoBehaviour
 
     private void CheckCollisions()
     {
+        
         _isGrounded = Physics2D.OverlapBox(_groundCheck.transform.position, _groundCheck.Size, 0f, _layerMask);
         _isTouchingLeft = CastRayToDirection(Vector2.left);
          _isTouchingRight = CastRayToDirection(Vector2.right);
@@ -168,13 +172,14 @@ public class PlayerMove : MonoBehaviour
         Vector3 horizontalMove = new Vector2(_xVelocity, _rb.velocity.y);
         horizontalMove.y = 0;
         horizontalMove.Normalize();
-        var hit = Physics2D.Raycast(transform.position+ (Vector3)Vector2.up * 0.5f, horizontalMove, 0.55f, _layerMask);
-        var hit1 = Physics2D.Raycast(transform.position+ (Vector3)Vector2.down * 0.5f, horizontalMove, 0.55f, _layerMask);
+        RaycastHit2D hit = Physics2D.Raycast(transform.position+ (Vector3)Vector2.up * 0.5f, horizontalMove, 0.55f, _layerMask);
+        RaycastHit2D hit1 = Physics2D.Raycast(transform.position+ (Vector3)Vector2.down * 0.5f, horizontalMove, 0.55f, _layerMask);
+       
         if (hit || hit1)
         {
-           
             // If so, stop the movement
             _rb.velocity = new Vector3(0, _rb.velocity.y);
+                
         }
         else
         {
@@ -189,8 +194,6 @@ public class PlayerMove : MonoBehaviour
             _time = 0;
             if (_isTouchingRight && _horizontal < 0 || _isTouchingLeft && _horizontal > 0)
             {
-                
-                Debug.Log("jmp");
                 _rb.velocity = new Vector2(_xVelocity, _wallJumpVelocity);
                 // _CanSecondJump = true;
             }
