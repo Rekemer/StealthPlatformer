@@ -71,6 +71,7 @@ public class GrapplingHook : MonoBehaviour
     {
         ropeRenderer.enabled = false;
         _ropeAnchor.gameObject.SetActive(false);
+        crosshair.gameObject.SetActive(true);
     }
 
     // Update is called once per frame
