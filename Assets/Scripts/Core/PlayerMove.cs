@@ -47,6 +47,8 @@ public class PlayerMove : MonoBehaviour
     private bool _hasBeenInvoked;
     private bool _leftPrevious;
     private bool _rightPrevious;
+    public Rigidbody2D Rb => _rb;
+    public bool IsGrounded => _isGrounded;
 
     private void Awake()
     {
@@ -239,12 +241,13 @@ public class PlayerMove : MonoBehaviour
 
 #if UNITY_EDITOR
     // method drawing our ground checkers in scene
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         Handles.color = Color.red;
-        Handles.DrawWireCube(_groundCheck.transform.position, _groundCheck.Size);
-        Handles.DrawWireCube(_leftWallCheck.transform.position, _leftWallCheck.Size);
-        Handles.DrawWireCube(_rightWallCheck.transform.position, _rightWallCheck.Size);
+        float scale = transform.localScale.x;
+        Handles.DrawWireCube(_groundCheck.transform.position, _groundCheck.Size );
+        Handles.DrawWireCube(_leftWallCheck.transform.position, _leftWallCheck.Size );
+        Handles.DrawWireCube(_rightWallCheck.transform.position, _rightWallCheck.Size );
     }
 #endif
 }

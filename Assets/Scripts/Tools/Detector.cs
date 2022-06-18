@@ -1,41 +1,46 @@
 ﻿#if UNITY_EDITOR
 using UnityEditor;
 #endif
+using System;
 using UnityEngine;
 
 [ExecuteAlways]
-    public class Detector : MonoBehaviour, IHaveSize
+public class Detector : MonoBehaviour, IHaveSize
+{
+    public Vector2 Size
     {
-        public Vector2 Size { get => size; }
-        [SerializeField]
-        private Vector2 size;
-        private BoxCollider2D collider;
-        private void Awake()
+        get
         {
-            collider = GetComponent<BoxCollider2D>();
-        }
-
-        
-        private void OnEnable()
-        {
-            if (!DetectorManager.objects.Contains(this))
-            {
-                DetectorManager.objects.Add(this);
-            }
-        }
-        
-        private void OnDisable()
-        {
-            if (DetectorManager.objects.Contains(this))
-            {
-                DetectorManager.objects.Remove(this);
-            }
-        }
-        private void OnValidate() // when something in inspector changes this function is called - change size of collider from script inspector field
-        {
-            if (collider != null)
-            {
-                collider.size = size;
-            }
+#if UNITY_EDITOR
+            float playerScale = transform.parent.parent.localScale.x;
+            size = _size * playerScale;
+            return size;
+#else
+            size = _size;
+            return size;
+#endif
         }
     }
+
+
+    private Vector2 size;
+    [SerializeField] private Vector2 _size;
+    private BoxCollider2D collider;
+
+    private void Awake()
+    {
+        float playerScale = transform.parent.parent.localScale.x;
+        size = _size * playerScale;
+    }
+
+    private void
+        OnValidate() // when something in inspector changes this function is called - change size of collider from script inspector field
+    {
+        float playerScale = transform.parent.parent.localScale.x;
+#if UNITY_EDITOR
+        size = _size * playerScale;
+#else
+            size = _size;
+#endif
+    }
+}
