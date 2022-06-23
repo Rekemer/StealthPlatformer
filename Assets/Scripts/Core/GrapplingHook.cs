@@ -34,7 +34,7 @@ public class GrapplingHook : MonoBehaviour
         set
         {
             _gotBonus = true;
-            if (_isHookAvailable == false)
+            if (_isRopeAttached == false)
             {
                 // just apply bonus
                 EventSystem.current.ActivateBonus();
@@ -43,13 +43,7 @@ public class GrapplingHook : MonoBehaviour
             }
             else
             {
-                // unhook once bonus is got
-               Unhook();
-               EventSystem.current.ActivateBonus();
-               ResetHook(true);
-               
-               // have hook to spare once bonus is got
-               //StartCoroutine(WaitingForEndOfHooking());
+                StartCoroutine(WaitingForEndOfHooking());
             }
         }
         
@@ -57,13 +51,13 @@ public class GrapplingHook : MonoBehaviour
 
     IEnumerator WaitingForEndOfHooking()
     {
-        while (!_isHookAvailable)
+        while (_isRopeAttached)
         {
-                ResetHook(true);
-                EventSystem.current.ActivateBonus();
-                _gotBonus = false;
-                yield return null;
+            yield return null;
         }
+        EventSystem.current.ActivateBonus();
+        ResetHook(true);
+        _gotBonus = false;
         
     }
     // Start is called before the first frame update
@@ -171,7 +165,6 @@ public class GrapplingHook : MonoBehaviour
 
     public IEnumerator StartCooldown()
     {
-        if (_gotBonus == false)
         ResetHook(false);
         // start to fill timer (call method)
         yield return CooldownRoutine(_coolDown);
@@ -184,7 +177,6 @@ public class GrapplingHook : MonoBehaviour
         while (time <=coolDown && !_isHookAvailable)
         {
             time += Time.deltaTime;
-            Debug.Log(time);
             yield return null;
         }
     }

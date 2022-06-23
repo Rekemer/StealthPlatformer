@@ -8,7 +8,7 @@ namespace Enemy
     public class Enemy : EnemyBase, IEnemy
     {
         [SerializeField] private Vector3[] patrolRoute;
-
+        [SerializeField] private bool isStatic;
         public Vector3[] globalPatrolRoute { get; private set; }
 
        
@@ -59,29 +59,33 @@ namespace Enemy
 
         IEnumerator PatrolRoutine(Vector3[] waypoints)
         {
-            transform.position = waypoints[0];
-
-            int targetWayPointIndex = 1;
-
-            Vector3 targetWayPoint = waypoints[0];
-
-            TurnTo(targetWayPoint);
-            while (stateMachine.GetCurrentState() is Patrol)
+            if (!isStatic)
             {
-                targetWayPoint.y = transform.position.y;
-                transform.position = Vector2.MoveTowards(transform.position, targetWayPoint, speed * Time.deltaTime);
-                if (transform.position.x == targetWayPoint.x)
+                transform.position = waypoints[0];
+
+                int targetWayPointIndex = 1;
+
+                Vector3 targetWayPoint = waypoints[0];
+            
+                TurnTo(targetWayPoint);
+                while (stateMachine.GetCurrentState() is Patrol )
                 {
-                    targetWayPointIndex = (targetWayPointIndex + 1) % waypoints.Length;
-                    targetWayPoint = waypoints[targetWayPointIndex];
+                    targetWayPoint.y = transform.position.y;
+                    transform.position = Vector2.MoveTowards(transform.position, targetWayPoint, speed * Time.deltaTime);
+                    if (transform.position.x == targetWayPoint.x)
+                    {
+                        targetWayPointIndex = (targetWayPointIndex + 1) % waypoints.Length;
+                        targetWayPoint = waypoints[targetWayPointIndex];
 
-                    yield return new WaitForSeconds(1f); // to wait after reaching point
+                        yield return new WaitForSeconds(1f); // to wait after reaching point
 
-                    TurnTo(targetWayPoint);
+                        TurnTo(targetWayPoint);
+                    }
+
+                    yield return null;
                 }
-
-                yield return null;
             }
+           
         }
 
         void TurnTo(Vector3 whereToTurn)

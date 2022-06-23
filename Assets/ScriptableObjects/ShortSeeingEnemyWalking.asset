@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51ddc8944e86cec41a0a5fe3cf31135d, type: 3}
+  m_Name: ShortSeeingEnemyWalking
+  m_EditorClassIdentifier: 
+  viewDistance: 8.29
+  viewAngleInDegrees: 60
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 832
+  visibleTargetMask:
+    serializedVersion: 2
+    m_Bits: 256
+  meshResolution: 1
+  edgeResolveIterations: 10
+  materialOfVisualField: {fileID: 2100000, guid: 2b1a6fade8013bc4ab5823e541af901c, type: 2}
